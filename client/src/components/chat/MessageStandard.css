@@ -1,0 +1,13 @@
+.message__standard {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 9px;
+  width: fit-content;
+
+  background-color: rgba(255, 0, 0, 0.452);
+}
+
+.message__received {
+  margin-left: auto;
+  background-color: rgba(0, 1, 78, 0.5);
+}

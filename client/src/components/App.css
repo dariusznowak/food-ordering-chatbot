@@ -1,14 +1,15 @@
 .app {
   display: grid;
   background-image: url("https://www.thespruce.com/thmb/LIYt_gkk2IA7UCQsumcDzXOUn3Q=/2845x2845/smart/filters:no_upscale()/types-of-leaf-arrangements-3269814-03-a6b9b4775c5b47b79e14aed9a7e6ac90.jpg");
+  /* background: rgb(2,0,37); */
+  /* background: linear-gradient(90deg, rgba(2,0,37,1) 0%, rgba(0,143,172,1) 100%);  place-items: center; */
   place-items: center;
   height: 100vh;
 }
 
 .app__body {
   display: flex;
-  /* background: none; */
-  background: rgba(255, 255, 255, 0.956);
-  height: 95vh;
-  width: 95vw;
+  background: none;
+  height: 93vh;
+  width: 90vw;
 }

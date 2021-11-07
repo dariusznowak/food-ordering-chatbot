@@ -9,7 +9,8 @@
 .chat__body {
   flex: 1;
   padding: 25px;
-  overflow: scroll;
+  /* overflow-y: scroll; */
+  overflow-y: auto;
 }
 
 .chat__footer {

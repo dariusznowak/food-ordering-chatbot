@@ -2,15 +2,19 @@
   display: flex;
   flex-direction: column;
   flex: 0.8;
-  background: rgba(255, 255, 255, 0.822);
-  /* border-radius: 0 30px 30px 0; */
+  background: rgba(255, 255, 255, 0.63);
+  border-radius: 0 10px 10px 0;
 }
 
 .chat__body {
+  display: flex;
+  /* flex-direction: column; */
+  flex-direction: column-reverse; /*important!!! dodawanie wiadomosci od tylu*/
   flex: 1;
   padding: 25px;
   /* overflow-y: scroll; */
   overflow-y: auto;
+  margin-top: 10px;
 }
 
 .chat__footer {
@@ -40,8 +44,7 @@
 .chat__footer > form > input:focus {
   outline: none;
 }
-
+/* 
 .chat__footer > .MuiSvgIcon-root {
-  padding: 8px;
-  color: rgb(105, 0, 0);
-}
+  padding: 118px;
+} */

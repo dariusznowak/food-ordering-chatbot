@@ -3,7 +3,7 @@
   flex-direction: column;
   flex: 0.2;
   background: rgb(255, 255, 255);
-  /* border-radius: 30px 0 0 30px; */
+  border-radius: 10px 0 0 10px;
 
   border-right: 1px solid lightgray;
 }
@@ -43,6 +43,7 @@
 
 .sidebar_userInfo {
   display: flex;
+  align-items: center;
 }
 
 .sidebar_userInfo > p {
@@ -63,13 +64,11 @@
 
 .sidebar__optionsBoxGroup > div {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 }
 
 .sidebar__optionsBoxGroup > div:hover {
-  display: flex;
-  align-items: center;
   color: rgb(37, 54, 36);
 }
 
@@ -80,13 +79,11 @@
 
 .sidebar__logout {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+
   cursor: pointer;
 }
 
 .sidebar__logout:hover {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
   color: rgb(37, 54, 36);
 }

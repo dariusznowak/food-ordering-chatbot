@@ -1,15 +1,27 @@
 import "./App.css";
 import Sidebar from "./sidebar/Sidebar";
 import Chat from "./chat/Chat";
+import UserSettings from "./userSettings/UserSettings";
+/*react router*/
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
-    <div className="app">
-      <div className="app__body">
-        <Sidebar />
-        <Chat />
+    <Router>
+      <div className="app">
+        <div className="app__body">
+          <Sidebar />
+          <Switch>
+            <Route exact path="/">
+              <Chat />
+            </Route>
+            <Route path="/usersettings">
+              <UserSettings />
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

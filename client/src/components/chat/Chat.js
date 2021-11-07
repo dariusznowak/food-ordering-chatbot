@@ -1,22 +1,27 @@
 import React from "react";
+import { useEffect } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import SendIcon from "@mui/icons-material/Send";
-import { IconButton } from "@mui/material";
+import { backdropClasses, IconButton } from "@mui/material";
+
+//important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
   return (
     <div className="chat">
       <div className="chat__body">
+        <MessageStandard isReceiver="true" />
+        <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="true" />
-        <MessageStandard isReceiver="false" />{" "}
+        <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="true" />
-        <MessageStandard isReceiver="false" />{" "}
+        <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="true" />
-        <MessageStandard isReceiver="false" />{" "}
+        <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="false" />
         <MessageStandard isReceiver="true" />
         <MessageStandard isReceiver="false" />

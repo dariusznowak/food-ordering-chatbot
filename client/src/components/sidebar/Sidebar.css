@@ -62,10 +62,9 @@
   overflow-y: auto;
 }
 
-.sidebar__optionsBoxGroup > div {
+.sidebar__singleOption {
   display: flex;
   align-items: flex-start;
-  cursor: pointer;
 }
 
 .sidebar__optionsBoxGroup > div:hover {
@@ -85,5 +84,25 @@
 }
 
 .sidebar__logout:hover {
-  color: rgb(37, 54, 36);
+  /*ta klasa zostanie wywalona gdy podepne ekran logowania pod button Log out*/
+  color: rgb(131, 131, 131) !important;
+}
+
+.sidebar__link {
+  text-decoration: none;
+}
+
+.sidebar__link:hover {
+  text-decoration: none;
+  color: rgb(83, 83, 83) !important;
+}
+
+.sidebar__link:active {
+  color: rgb(143, 143, 143) !important;
+}
+
+.sidebar__link:visited,
+.sidebar__link:link {
+  text-decoration: none;
+  color: black;
 }

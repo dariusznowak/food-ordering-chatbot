@@ -23,6 +23,14 @@ html {
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
 }
 
+.app__dashboard {
+  display: flex;
+  flex-direction: column;
+  flex: 0.8;
+  background: rgba(255, 255, 255, 0.63);
+  border-radius: 0 10px 10px 0;
+}
+
 /***scroll bar***/
 ::-webkit-scrollbar {
   width: 3px;

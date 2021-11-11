@@ -3,11 +3,23 @@
   "version": "1.0.0",
   "description": "Backend of food-ordering-chatbot application",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "Dariusz Nowak",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "actions-on-google": "^2.6.0",
+    "body-parser": "^1.18.3",
+    "dialogflow": "^0.8.2",
+    "dialogflow-fulfillment": "^0.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.20",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.4"
+  }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import SendIcon from "@mui/icons-material/Send";
@@ -9,15 +9,14 @@ import Axios from "../../axios";
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
+  const [conversations, setConversations] = useState([]);
+  const [userMessages, setMessages] = useState([]);
+
   useEffect(() => {
-    // eventQuery("welcomeToMyWebsite");
     eventQuery("welcomeToMyWebsite");
-    console.log("odpalono use effect");
   }, []);
 
   const textQuery = async (text) => {
-    // let conversations = [];
-
     // First we need to take care of the message we sent
     // Na poczatku zajmujemy sie wiadomoscią, którą wysyłamy !!!
     let conversation = {
@@ -31,8 +30,14 @@ function Chat() {
       },
     };
 
-    // conversations.push(conversation);
-    console.log(conversation);
+    const userMessage = {
+      who: "user",
+      content: {
+        text: {
+          text: text,
+        },
+      },
+    };
 
     // We need to take care of the message chatbot sent
     // Potem zajmujemy się wiadomością zwracaną od chatbota !!!
@@ -53,7 +58,8 @@ function Chat() {
         who: "bot",
         content: content,
       };
-      // conversations.push(conversation);
+      setConversations([conversation, userMessage, ...conversations]);
+
       console.log(conversation);
     } catch (error) {
       conversation = {
@@ -64,8 +70,7 @@ function Chat() {
           },
         },
       };
-      // conversations.push(conversation);
-      console.log(conversation);
+      setConversations([conversation, userMessage, ...conversations]);
     }
   };
 
@@ -88,6 +93,9 @@ function Chat() {
         content: content,
       };
       // conversations.push(conversation);
+
+      setConversations([conversation, ...conversations]);
+
       console.log(conversation);
     } catch (error) {
       let conversation = {
@@ -98,7 +106,7 @@ function Chat() {
           },
         },
       };
-      // conversations.push(conversation);
+      setConversations([conversation, ...conversations]);
       console.log(conversation);
     }
   };
@@ -109,34 +117,37 @@ function Chat() {
       if (!e.target.value) {
         return alert("nie mozna pustej wiadomosci wysylac");
       }
-
+      setConversations([
+        {
+          who: "user",
+          content: {
+            text: {
+              text: e.target.value,
+            },
+          },
+        },
+        ...conversations,
+      ]);
       // we will send request to text query route
       textQuery(e.target.value);
-      // textQuery("siemka dzienks");
       e.target.value = "";
       e.preventDefault();
     }
   };
 
-  const chwilowoTutajJestContent = "To jest testowa wiadomosc";
+  // const chwilowoTutajJestContent = "To jest testowa wiadomosc";
   return (
     <div className="chat">
       <div className="chat__body">
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
-        <MessageStandard who="user" content={chwilowoTutajJestContent} />
-        <MessageStandard who="bot" content={chwilowoTutajJestContent} />
+        {conversations.map((message, index) => {
+          return (
+            <MessageStandard
+              key={index}
+              who={message.who}
+              content={message.content.text.text}
+            />
+          );
+        })}
       </div>
       <div className="chat__footer">
         <form>

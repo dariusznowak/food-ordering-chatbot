@@ -43,4 +43,26 @@ router.post("/textQuery", async (req, res) => {
   res.send(result);
 });
 
+router.post("/eventQuery", async (req, res) => {
+  // The event query request.
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      event: {
+        name: req.body.event,
+        languageCode: languageCode,
+      },
+    },
+  };
+
+  // Send request and log result
+  const responses = await sessionClient.detectIntent(request);
+  console.log("Detected intent");
+  const result = responses[0].queryResult;
+  console.log(`  Query: ${result.queryText}`);
+  console.log(`  Response: ${result.fulfillmentText}`);
+  //wysylanie responsa do frontendu
+  res.send(result);
+});
+
 module.exports = router;

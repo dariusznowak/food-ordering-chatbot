@@ -1,16 +1,22 @@
-html {
+/* html {
   background: url("https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80")
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+} */
 
 .app {
   display: grid;
   place-items: center;
   height: 100vh;
+  background: url("https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80")
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .app__body {
@@ -23,13 +29,13 @@ html {
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
 }
 
-.app__dashboard {
+/* .app__dashboard {
   display: flex;
   flex-direction: column;
   flex: 0.8;
   background: rgba(255, 255, 255, 0.63);
   border-radius: 0 10px 10px 0;
-}
+} */
 
 /***scroll bar***/
 ::-webkit-scrollbar {

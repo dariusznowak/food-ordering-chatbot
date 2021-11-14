@@ -9,14 +9,32 @@ import Axios from "../../axios";
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
-  const [conversations, setConversations] = useState([]);
-  const [userMessages, setMessages] = useState([]);
+  // const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState(() => {
+    const localStorageData = localStorage.getItem("conversations");
+    return localStorageData ? JSON.parse(localStorageData) : [];
+  });
+
+  //zapisanie wiadomosci do localstorage
+  useEffect(() => {
+    localStorage.setItem("conversations", JSON.stringify(conversations));
+  }, [conversations]);
 
   useEffect(() => {
-    eventQuery("welcomeToMyWebsite");
+    //jezeli localstorage byl pusty to powitaj usera
+    if (conversations.length === 0) {
+      console.log("local pusty jest to mowi useEffect()");
+      eventQuery("welcomeToMyWebsite");
+    }
   }, []);
 
+  // const [toDoTable, setToDoTask] = useState(() => {
+  //   const localStorageData = localStorage.getItem("toDoTable");
+  //   return localStorageData ? JSON.parse(localStorageData) : [];
+  // });
+
   const textQuery = async (text) => {
+    // localStorage.clear();
     // First we need to take care of the message we sent
     // Na poczatku zajmujemy sie wiadomoscią, którą wysyłamy !!!
     let conversation = {
@@ -58,12 +76,13 @@ function Chat() {
         who: "bot",
         content: content,
       };
+      // setConversations([]); //mozna tak na szybko oproznic localstorage
       setConversations([conversation, userMessage, ...conversations]);
 
       console.log(conversation);
     } catch (error) {
       conversation = {
-        who: "user",
+        who: "bot",
         content: {
           text: {
             text: "Error just occured!!!",
@@ -99,7 +118,7 @@ function Chat() {
       console.log(conversation);
     } catch (error) {
       let conversation = {
-        who: "user",
+        who: "bot",
         content: {
           text: {
             text: "Error just occured!!!",

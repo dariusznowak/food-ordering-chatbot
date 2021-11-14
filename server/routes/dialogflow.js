@@ -39,6 +39,11 @@ router.post("/textQuery", async (req, res) => {
   const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
+  if (result.intent) {
+    console.log(`Intent: ${result.intent.displayName}`);
+  } else {
+    console.log(`No intent matched.`);
+  }
   //wysylanie responsa do frontendu
   res.send(result);
 });
@@ -61,6 +66,11 @@ router.post("/eventQuery", async (req, res) => {
   const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
+  if (result.intent) {
+    console.log(`Intent: ${result.intent.displayName}`);
+  } else {
+    console.log(`No intent matched.`);
+  }
   //wysylanie responsa do frontendu
   res.send(result);
 });

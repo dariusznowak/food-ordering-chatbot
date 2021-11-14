@@ -6,6 +6,8 @@ import Feedback from "./feedback/Feedback";
 /*react router*/
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import LoginPage from "./login/LoginPage";
+
 function App() {
   return (
     <Router>

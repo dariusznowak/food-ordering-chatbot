@@ -1,7 +1,9 @@
 import React from "react";
 import "./Register.css";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
+// import axios from "axios";
+// import axios from "../../axios.js";
+// import UserContext from "./UserContext";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -12,12 +14,15 @@ function Register() {
   const registerUser = (e) => {
     e.preventDefault();
 
-    const data = { email, password };
+    // const data = { login, email, password, fullName };
 
-    axios.post("", data);
+    // //axios robi ajax requesta
+    // axios.post("/register", data).then((res) => {
+    //   console.log(res.data.email);
+    //   // user.setEmail(res.data.email);
+    // });
   };
 
-  // return <div className="register"></div>;
   return (
     <form className="register" actions="" onSubmit={(e) => registerUser(e)}>
       <h2>Register Page</h2>

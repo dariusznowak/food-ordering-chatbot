@@ -45,7 +45,7 @@ function Sidebar() {
           </Link>
         </div>
         {/* cos tu z linkiem do login nie dziala */}
-        <Link to="/login" className="sidebar__link">
+        <Link to="/register" className="sidebar__link">
           <div className="sidebar__logout">
             <LogoutIcon />
             <p> Log out</p>

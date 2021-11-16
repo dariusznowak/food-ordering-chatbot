@@ -19,7 +19,7 @@ function Sidebar() {
         <h3>User logged in</h3>
         <div className="sidebar_userInfo">
           <Avatar src="https://media-exp1.licdn.com/dms/image/C4E03AQGQFQ_AGFxzgw/profile-displayphoto-shrink_400_400/0/1634675705304?e=1642032000&v=beta&t=M07g0BbowFzd3xE-C4g7meQ6PUJax7GZQY0JKLjS1_c" />
-          <p>Dariusz (daroo735)</p>
+          <p>Dariusz (dariusz75)</p>
         </div>
       </div>
       <div className="sidebar__optionsBox">
@@ -44,10 +44,13 @@ function Sidebar() {
             </div>
           </Link>
         </div>
-        <div className="sidebar__logout">
-          <LogoutIcon />
-          <p> Log out</p>
-        </div>
+        {/* cos tu z linkiem do login nie dziala */}
+        <Link to="/register" className="sidebar__link">
+          <div className="sidebar__logout">
+            <LogoutIcon />
+            <p> Log out</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

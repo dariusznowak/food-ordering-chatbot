@@ -6,6 +6,9 @@ import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
 
+import { withRouter } from "react-router-dom";
+import Sidebar from "../sidebar/Sidebar";
+
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
@@ -156,34 +159,39 @@ function Chat() {
 
   // const chwilowoTutajJestContent = "To jest testowa wiadomosc";
   return (
-    <div className="chat">
-      <div className="chat__body">
-        {conversations.map((message, index) => {
-          return (
-            <MessageStandard
-              key={index}
-              who={message.who}
-              content={message.content.text.text}
-            />
-          );
-        })}
-      </div>
-      <div className="chat__footer">
-        <form>
-          <input
-            placeholder="Type a message"
-            type="text"
-            onKeyPress={keyPressHandler}
-          />
-          <button type="submit" />
-        </form>
+    <div className="app">
+      <div className="app__body">
+        <Sidebar />
+        <div className="chat">
+          <div className="chat__body">
+            {conversations.map((message, index) => {
+              return (
+                <MessageStandard
+                  key={index}
+                  who={message.who}
+                  content={message.content.text.text}
+                />
+              );
+            })}
+          </div>
+          <div className="chat__footer">
+            <form>
+              <input
+                placeholder="Type a message"
+                type="text"
+                onKeyPress={keyPressHandler}
+              />
+              <button type="submit" />
+            </form>
 
-        <IconButton>
-          <SendIcon />
-        </IconButton>
+            <IconButton>
+              <SendIcon />
+            </IconButton>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Chat;
+export default withRouter(Chat);

@@ -2,6 +2,8 @@
 /build
 /client/node_modules
 
+mongodb.js
+
 .DS_Store
 
 npm-debug.log*

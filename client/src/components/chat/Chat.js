@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import SendIcon from "@mui/icons-material/Send";
@@ -9,6 +9,8 @@ import Axios from "../../axios";
 import { withRouter } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 
+import { UserContext } from "../loginAndRegister/UserContext";
+
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
@@ -17,6 +19,9 @@ function Chat() {
     const localStorageData = localStorage.getItem("conversations");
     return localStorageData ? JSON.parse(localStorageData) : [];
   });
+
+  const { isAuth, setIsAuth, login, setLogin, userInfo } =
+    useContext(UserContext);
 
   //zapisanie wiadomosci do localstorage
   useEffect(() => {
@@ -63,6 +68,7 @@ function Chat() {
     // We need to take care of the message chatbot sent
     // Potem zajmujemy się wiadomością zwracaną od chatbota !!!
     const textQueryVariables = {
+      userInfo,
       text: text,
     };
 
@@ -82,7 +88,7 @@ function Chat() {
       // setConversations([]); //mozna tak na szybko oproznic localstorage
       setConversations([conversation, userMessage, ...conversations]);
 
-      console.log(conversation);
+      // console.log(conversation);
     } catch (error) {
       conversation = {
         who: "bot",
@@ -99,6 +105,7 @@ function Chat() {
   const eventQuery = async (event) => {
     // We need to take care of the message chatbot sent
     const eventQueryVariables = {
+      userInfo,
       event: event,
     };
 

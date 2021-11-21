@@ -23,7 +23,7 @@ function Sidebar() {
       .then(() => {
         //setLogin("");
         setIsAuth(false);
-        // localStorage.setItem("isAuth", JSON.stringify(false));
+        localStorage.setItem("isAuth", JSON.stringify(false));
       });
     //nastepnie usuwamy ciasteczko w endpoincie w api
 
@@ -43,7 +43,7 @@ function Sidebar() {
         <div className="sidebar_userInfo">
           <Avatar src="https://media-exp1.licdn.com/dms/image/C4E03AQGQFQ_AGFxzgw/profile-displayphoto-shrink_400_400/0/1634675705304?e=1642032000&v=beta&t=M07g0BbowFzd3xE-C4g7meQ6PUJax7GZQY0JKLjS1_c" />
           <div className="sidebar_userInfoText">
-            <p>({userInfo.login})</p>
+            <p>{userInfo.fullName}</p>
             <p>({userInfo.login})</p>
           </div>
         </div>

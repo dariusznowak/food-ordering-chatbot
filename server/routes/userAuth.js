@@ -17,7 +17,14 @@ router.get("/user", (req, res) => {
     User.findById(payload.id).then((userInfo) => {
       //   console.log("userInf = " + userInfo);
       // res.json(userInfo);
-      res.json({ id: userInfo._id, login: userInfo.login, isAuth: true });
+      res.json({
+        id: userInfo._id,
+        fullName: userInfo.fullName,
+        login: userInfo.login,
+        residence: userInfo.residence,
+        phoneNumber: userInfo.phoneNumber,
+        isAuth: true,
+      });
       //nastepnie w App.js dalej dzialamy
       console.log("you are logged in");
     });

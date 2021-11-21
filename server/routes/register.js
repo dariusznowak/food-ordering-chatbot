@@ -12,14 +12,15 @@ const secret = "secret123";
 
 router.post("/register", (req, res) => {
   // const { login, email, fullName, password } = req.body;
-  const { login, password } = req.body;
+  const { fullName, login, residence, phoneNumber, password } = req.body;
   //enkrypcja hasła, 10-ile razy bedzie kodowane
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   const user = new User({
+    fullName,
     login,
-    // email,
-    // fullName,
+    residence,
+    phoneNumber,
     password: hashedPassword,
   });
 

@@ -31,6 +31,7 @@ function App() {
       .get("/user", { withCredentials: true })
       .then((res) => {
         setUserInfo(res.data);
+        console.log(res.data);
         // setIsAuth(true);
       })
       .catch(() => {

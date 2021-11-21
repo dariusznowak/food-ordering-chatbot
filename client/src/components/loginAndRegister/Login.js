@@ -18,6 +18,12 @@ function Login() {
   const { isAuth, setIsAuth, login, setLogin, userInfo, setUserInfo } =
     useContext(UserContext);
 
+  useEffect(() => {
+    if (isAuth) {
+      history.push("/");
+    }
+  });
+
   //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();
   const goToMainPage = () => {
@@ -98,7 +104,7 @@ function Login() {
           <p className="register_login__registerLink">
             Don't have an account?{" "}
             <span>
-              <Link to="/register">Create one here!</Link>
+              <Link to="/register">Create account</Link>
             </span>
           </p>
           {loginError && <h1>LOGIN ERROR! WRONG LOGIN OR PASSWORD!</h1>}

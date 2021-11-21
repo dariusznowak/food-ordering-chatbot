@@ -46,7 +46,11 @@
   align-items: center;
 }
 
-.sidebar_userInfo > p {
+.sidebar_userInfoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
   margin-left: 10px;
 }
 

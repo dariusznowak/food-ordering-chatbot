@@ -6,6 +6,11 @@ import axios from "../../axios.js";
 import { UserContext } from "./UserContext";
 import { useHistory } from "react-router-dom";
 
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Avatar } from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
+
 // function Register() {
 function Register() {
   // const [email, setEmail] = useState("");
@@ -14,8 +19,7 @@ function Register() {
   const [inputPassword, setInputPassword] = useState("");
   const [registerError, setRegisterError] = useState(false);
 
-  const { isAuth, setIsAuth, login, setLogin, userInfo, setUserInfo } =
-    useContext(UserContext);
+  const { isAuth, setIsAuth, userInfo, setUserInfo } = useContext(UserContext);
 
   //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();
@@ -34,7 +38,6 @@ function Register() {
       .post("/register", data, { withCredentials: true })
       .then((res) => {
         //tutaj linikja ustawiajaca login w context
-        // setLogin(res.data.login);
         setUserInfo(res.data);
         setInputLogin("");
         setInputPassword("");
@@ -51,38 +54,82 @@ function Register() {
   };
 
   return (
-    <form className="register" actions="" onSubmit={(e) => registerUser(e)}>
-      <h2>Register Page</h2>
-      {/* <input
-        type="email"
-        placeholder="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="fullName"
-        placeholder="full name"
-        value={fullName}
-        onChange={(e) => setFullName(e.target.value)}
-      /> */}
-      <input
-        type="login"
-        placeholder="login"
-        value={inputLogin}
-        onChange={(e) => setInputLogin(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        value={inputPassword}
-        onChange={(e) => setInputPassword(e.target.value)}
-      />
+    <div className="register_login">
+      <div className="register_login__body">
+        <form
+          className="register_login__form"
+          actions=""
+          onSubmit={(e) => registerUser(e)}
+        >
+          <div className="register_login__formHeader">
+            <Avatar style={{ background: "rgb(57, 169, 29)" }}>
+              <LockIcon />
+            </Avatar>
+            <h2>Create a new account</h2>
+          </div>
 
-      <button type="submit">register</button>
-      {registerError && (
-        <h1>REGISTER ERROR! USER WITH SUCH LOGIN EXISTS IN DB!</h1>
-      )}
-    </form>
+          <div className="register_login__inputs">
+            <TextField
+              className="register_login__single"
+              label="Full name"
+              variant="standard"
+              placeholder="Enter your full name"
+              required
+            />
+            <TextField
+              className="register_login__single"
+              label="Login"
+              variant="standard"
+              placeholder="Enter your login"
+              required
+              value={inputLogin}
+              onChange={(e) => setInputLogin(e.target.value)}
+            />
+            <TextField
+              className="register_login__single"
+              label="Address of residence"
+              variant="standard"
+              placeholder="Enter your address of residence"
+              required
+            />
+            <TextField
+              className="register_login__single"
+              label="Phone number"
+              variant="standard"
+              placeholder="Enter your phone number"
+              required
+            />
+            <TextField
+              className="register_login__single"
+              label="Password"
+              variant="standard"
+              placeholder="Enter your password"
+              type="password"
+              required
+              autoComplete="current-password"
+              value={inputPassword}
+              onChange={(e) => setInputPassword(e.target.value)}
+              fullWidth
+            />
+          </div>
+
+          <div className="register_login__buttonDiv">
+            <Button
+              style={{ background: "rgb(57, 169, 29)" }}
+              type="submit"
+              variant="contained"
+              color="success"
+            >
+              Register
+            </Button>
+          </div>
+
+          {registerError && (
+            <h1>REGISTER ERROR! USER WITH SUCH LOGIN EXISTS IN DB!</h1>
+          )}
+        </form>
+      </div>
+    </div>
   );
 }
 

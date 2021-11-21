@@ -22,9 +22,6 @@ function App() {
     const localStorageData = localStorage.getItem("isAuth");
     return localStorageData ? JSON.parse(localStorageData) : false;
   });
-  // const [isAuth, setIsAuth] = useState(false);
-  //moze trzymac isAuth w localStorage, zeby za kazdym odswiezeniem App()
-  //nie reinicjowalo mi stanu
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -35,8 +32,6 @@ function App() {
       .then((res) => {
         setUserInfo(res.data);
         // setIsAuth(true);
-        // console.log("useEffect powinien tu dac true: " + isAuth);
-        // console.log("useEffect powinien tu dac login: " + login);
       })
       .catch(() => {
         axios.post("/logout", {}, { withCredentials: true }).then(() => {
@@ -48,18 +43,10 @@ function App() {
   return (
     <UserContext.Provider value={{ isAuth, setIsAuth, userInfo, setUserInfo }}>
       <Router>
-        {/* <ProtectedRoute /> */}
-
-        {/* <Route exact path="/login">
-    <Login />
-  </Route> */}
-
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
 
-        {/* <ProtectedApp /> */}
-        {/* <ProtectedRoute exact path="/" component={ProtectedApp} isAuth={isAuth} /> */}
-        <ProtectedRoute exact path="/" component={Chat} isAuth={isAuth} />
+        <ProtectedRoute exact path="/" component={Chat} />
         <ProtectedRoute
           exact
           path="/usersettings"
@@ -74,8 +61,6 @@ function App() {
         />
         {/* path to ta czesc '...rest', a component to nasz strzezony component */}
         {/* to ZMIENIC!!!!!! isAuth to powinna byc jakas zmienna globalna z zalogowania czy cos (jakis useContext czy cos) */}
-        {/* trzeba tez wykminic jak zabezpieczyc pozostale route'y, m.in: "/feedback", "/usersettings" , bo powyzsza opcja sprawia
-    ze zostaje wyrenderowany tylko jeden komponent*/}
       </Router>
     </UserContext.Provider>
   );

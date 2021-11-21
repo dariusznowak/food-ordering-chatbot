@@ -15,7 +15,7 @@ function Login() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
 
-  const { isAuth, setIsAuth, login, setLogin, userInfo, setUserInfo } =
+  const { isAuth, setIsAuth, /* login, setLogin, userInfo, */ setUserInfo } =
     useContext(UserContext);
 
   useEffect(() => {
@@ -107,7 +107,13 @@ function Login() {
               <Link to="/register">Create account</Link>
             </span>
           </p>
-          {loginError && <h1>LOGIN ERROR! WRONG LOGIN OR PASSWORD!</h1>}
+          {loginError && (
+            <p
+              style={{ color: "red", fontWeight: "bold", textAlign: "center" }}
+            >
+              LOGIN ERROR! WRONG LOGIN OR PASSWORD!
+            </p>
+          )}
         </form>
       </div>
     </div>

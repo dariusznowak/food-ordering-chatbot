@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./Sidebar.css";
 // import { BsChatDotsFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
@@ -13,7 +13,7 @@ import axios from "../../axios";
 import { UserContext } from "../loginAndRegister/UserContext";
 
 function Sidebar() {
-  const { isAuth, setIsAuth, login, setLogin, userInfo } =
+  const { /*isAuth, */ setIsAuth, /*login, setLogin,*/ userInfo } =
     useContext(UserContext);
 
   const logout = () => {
@@ -30,8 +30,6 @@ function Sidebar() {
     //ponadto czyscimy localstorage z zapisanych wiadomosci
     localStorage.removeItem("conversations");
   };
-
-  console.log("Sidebar sie renderuje, a login to: " + userInfo.login);
 
   return (
     <div className="sidebar">

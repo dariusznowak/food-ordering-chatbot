@@ -20,7 +20,7 @@ function Chat() {
     return localStorageData ? JSON.parse(localStorageData) : [];
   });
 
-  const { isAuth, setIsAuth, login, setLogin, userInfo } =
+  const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
     useContext(UserContext);
 
   //zapisanie wiadomosci do localstorage
@@ -28,13 +28,15 @@ function Chat() {
     localStorage.setItem("conversations", JSON.stringify(conversations));
   }, [conversations]);
 
-  useEffect(() => {
-    //jezeli localstorage byl pusty to powitaj usera
-    if (conversations.length === 0) {
-      console.log("local pusty jest to mowi useEffect()");
-      eventQuery("welcomeToMyWebsite");
-    }
-  }, []);
+  useEffect(
+    () => {
+      //jezeli localstorage byl pusty to powitaj usera
+      if (conversations.length === 0) {
+        console.log("local pusty jest to mowi useEffect()");
+        eventQuery("welcomeToMyWebsite");
+      }
+    } /*, []*/
+  );
 
   // const [toDoTable, setToDoTask] = useState(() => {
   //   const localStorageData = localStorage.getItem("toDoTable");

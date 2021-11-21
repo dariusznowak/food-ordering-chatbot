@@ -1,6 +1,6 @@
 import React from "react";
 import "./Register.css";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 // import axios from "axios";
 import axios from "../../axios.js";
 import { UserContext } from "./UserContext";
@@ -22,7 +22,8 @@ function Register() {
   const [inputPhoneNumber, setInputPhoneNumber] = useState("");
   const [registerError, setRegisterError] = useState(false);
 
-  const { isAuth, setIsAuth, userInfo, setUserInfo } = useContext(UserContext);
+  const { isAuth, /*setIsAuth, userInfo, */ setUserInfo } =
+    useContext(UserContext);
 
   //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();

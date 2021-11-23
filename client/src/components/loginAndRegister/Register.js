@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { Avatar } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
+import { Input } from "@mui/material";
+
 // function Register() {
 function Register() {
   // const [email, setEmail] = useState("");
@@ -83,6 +85,9 @@ function Register() {
 
           <div className="register_login__inputs">
             <TextField
+              inputProps={{
+                maxLength: "30",
+              }}
               className="register_login__single"
               label="Full name"
               variant="standard"
@@ -92,6 +97,9 @@ function Register() {
               onChange={(e) => setInputFullName(e.target.value)}
             />
             <TextField
+              inputProps={{
+                maxLength: "60",
+              }}
               className="register_login__single"
               label="Login"
               variant="standard"
@@ -101,6 +109,9 @@ function Register() {
               onChange={(e) => setInputLogin(e.target.value)}
             />
             <TextField
+              inputProps={{
+                maxLength: "60",
+              }}
               className="register_login__single"
               label="Address of residence"
               variant="standard"
@@ -110,6 +121,7 @@ function Register() {
               onChange={(e) => setInputResidence(e.target.value)}
             />
             <TextField
+              type="number"
               className="register_login__single"
               label="Phone number"
               variant="standard"
@@ -119,6 +131,9 @@ function Register() {
               onChange={(e) => setInputPhoneNumber(e.target.value)}
             />
             <TextField
+              inputProps={{
+                maxLength: "20",
+              }}
               className="register_login__single"
               label="Password"
               variant="standard"

@@ -3,11 +3,12 @@ const express = require("express");
 const dialogflowRoutes = require("./routes/dialogflow.js");
 // const bodyParser = require("body-parser");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-
+const cookieParser = require("cookie-parser");
 const registerRoute = require("./routes/register.js");
 const loginRoute = require("./routes/login.js");
+const userAuth = require("./routes/userAuth.js");
+const fulfillmentRoutes = require("./routes/fulfillmentRoutes.js");
 
 // app config
 const app = express();
@@ -15,7 +16,14 @@ const port = process.env.PORT || 5000;
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+    // origin: "http://192.168.0.102:3000",
+  })
+);
+app.use(cookieParser());
 
 // DB config
 const connnection_url =
@@ -36,6 +44,8 @@ db.on("error", console.log);
 app.use("/api/dialogflow", dialogflowRoutes);
 app.use(registerRoute);
 app.use(loginRoute);
+app.use(userAuth);
+app.use(fulfillmentRoutes);
 
 // listen
 app.listen(port, () => console.log(`Server running at localhost: ${port}`));

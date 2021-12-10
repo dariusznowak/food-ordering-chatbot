@@ -1,3 +1,74 @@
-.register {
-  background-color: lightblue;
+.register_login {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background: white;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
+
+.register_login__body {
+  display: flex;
+  background: none;
+  /* height: 50vh;
+  width: 50vw; */
+  min-height: 30vh;
+  height: fit-content;
+  width: 400px;
+  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+}
+
+.register_login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  flex: 1;
+}
+
+.register_login__formHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  flex: 0.1;
+  margin-top: 15px;
+}
+
+.register_login__formHeader > h2 {
+  margin-top: 5px;
+}
+
+.register_login__inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  padding: 10px;
+}
+
+.register_login__buttonDiv {
+  /* margin-bottom: 15px; */
+  align-self: center;
+  margin: 15px;
+}
+
+.register_login__registerLink {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* .register_login__single{
+
+} */

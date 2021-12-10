@@ -12,12 +12,18 @@ const languageCode = config.dialogFlowSessionLanguageCode;
 
 // Create new session
 const sessionClient = new dialogflow.SessionsClient();
-const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+// const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
 // Text Query Route
 router.post("/textQuery", async (req, res) => {
+  //proboje sobie stworzyc unikalna sesje dla kazdego usera
+  const userId = req.body.userInfo.id;
+  let sessionPath = sessionClient.sessionPath(projectId, sessionId + userId);
+
   //We need to send some information that comes from the client to Dialogflow API
   // The text query request.
+
+  console.log("sessionPath: {} " + sessionPath);
 
   // The text query request.
   const request = {
@@ -49,6 +55,10 @@ router.post("/textQuery", async (req, res) => {
 });
 
 router.post("/eventQuery", async (req, res) => {
+  //proboje sobie stworzyc unikalna sesje dla kazdego usera
+  const userId = req.body.userInfo.id;
+  let sessionPath = sessionClient.sessionPath(projectId, sessionId + userId);
+
   // The event query request.
   const request = {
     session: sessionPath,

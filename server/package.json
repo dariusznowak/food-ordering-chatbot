@@ -10,7 +10,7 @@
   "author": "Dariusz Nowak",
   "license": "ISC",
   "dependencies": {
-    "actions-on-google": "^2.6.0",
+    "actions-on-google": "^2.14.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.5",

@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const registerRoute = require("./routes/register.js");
 const loginRoute = require("./routes/login.js");
 const userAuth = require("./routes/userAuth.js");
+const fulfillmentRoutes = require("./routes/fulfillmentRoutes.js");
 
 // app config
 const app = express();
@@ -18,8 +19,8 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    // origin: "http://localhost:3000",
-    origin: "http://192.168.0.102:3000",
+    origin: "http://localhost:3000",
+    // origin: "http://192.168.0.102:3000",
   })
 );
 app.use(cookieParser());
@@ -44,6 +45,7 @@ app.use("/api/dialogflow", dialogflowRoutes);
 app.use(registerRoute);
 app.use(loginRoute);
 app.use(userAuth);
+app.use(fulfillmentRoutes);
 
 // listen
 app.listen(port, () => console.log(`Server running at localhost: ${port}`));

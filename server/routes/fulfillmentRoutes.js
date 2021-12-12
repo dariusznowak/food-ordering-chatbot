@@ -10,6 +10,7 @@ const { WebhookClient } = require("dialogflow-fulfillment");
 // const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../models/User");
+const Food = require("../models/Food");
 
 const { Payload } = require("dialogflow-fulfillment");
 
@@ -39,15 +40,26 @@ router.post("/fulfillment", async (req, res) => {
     agent.add(`Hello ${fullName}! How can I help you?`);
   });
 
-  intentMap.set("order food", (agent) => {
+  intentMap.set("order food", async (agent) => {
     agent.add(req.body.queryResult.fulfillmentText);
 
     //tutaj powinno mi wyslac liste kategorii do frontendu
 
+    const food = await Food.find({});
+    // const food = new Food({
+    //   categoryName: "Indian",
+    //   categoryImgUrl:
+    //     "https://images.ctfassets.net/uexfe9h31g3m/4L61DHFmM8XRx1yrPjbZxc/4abddf99032667a9777cd99e51c1dbe1/butter-chicken.jpg?w=1024&h=768&fm=webp&fit=thumb&q=90",
+    //   imgAlt: "indian_food_category_img",
+    // });
+
+    // food.save();
+
     const payload = {
-      rozmiarDupska: "ogrrrrromna dupa",
-      rozmiarButa: 21,
+      food,
+      messageType: "food_categories",
     };
+
     //!!!TO DO 12.12.21 - prawdopodobnie frontend nie potrafi zczytywac wszystkich wiadomosci od chatbota (wyswietla tylko tą pierwszą!!!)
     agent.add(
       new Payload(agent.UNSPECIFIED, payload, {

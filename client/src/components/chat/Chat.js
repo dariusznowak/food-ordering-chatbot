@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
+import MessageFoodCategories from "./MessageFoodCategories";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
@@ -93,9 +94,10 @@ function Chat() {
             content: {
               text: {
                 // text: element.payload.fields,
-                text: "element.payload.fields",
+                text: "to jest food categories",
               },
             },
+            payload: element.payload,
           });
         } else {
           receivedMessages.push({
@@ -212,7 +214,27 @@ function Chat() {
         <Sidebar />
         <div className="chat">
           <div className="chat__body">
+            {/* trzeba bedzie zrobic tak, zeby w conversations byly wszystkie wiadomosci i zeby zwracalo taki komponent jaki trzeba */}
+
             {conversations.map((message, index) => {
+              if (message.hasOwnProperty("payload")) {
+                // console.log(message);
+                if (
+                  message.payload.fields.messageType.stringValue ===
+                  "food_categories"
+                ) {
+                  return (
+                    <MessageFoodCategories
+                      key={index}
+                      // categoryName="Indian"
+                      // imgUrl=""
+                      // imgAlt=""
+                      data={message.payload.fields.food.listValue.values}
+                    />
+                  );
+                }
+              }
+
               return (
                 <MessageStandard
                   key={index}

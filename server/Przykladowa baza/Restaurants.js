@@ -25,7 +25,7 @@ Restaurants = [
     ],
   },
   {
-    _id: "1",
+    _id: "2",
     name: "BurgerMaster",
     categoryID: "2", //id z kolekcji Categories
     menu: [

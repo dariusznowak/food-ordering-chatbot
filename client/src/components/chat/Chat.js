@@ -83,6 +83,8 @@ function Chat() {
       // requesta ustawiamy tak jak body zwracane z api dialogflow'a !!!
       const content = response.data.fulfillmentMessages[0];
 
+      console.log(response.data.fulfillmentMessages);
+
       conversation = {
         who: "bot",
         content: content,
@@ -119,6 +121,9 @@ function Chat() {
 
       const content = response.data.fulfillmentMessages[0];
 
+      console.log("eventQuery siemka");
+      console.log(response.data.fulfillmentMessages);
+
       let conversation = {
         who: "bot",
         content: content,
@@ -127,7 +132,7 @@ function Chat() {
 
       setConversations([conversation, ...conversations]);
 
-      console.log(conversation);
+      //console.log(conversation);
     } catch (error) {
       let conversation = {
         who: "bot",
@@ -138,7 +143,7 @@ function Chat() {
         },
       };
       setConversations([conversation, ...conversations]);
-      console.log(conversation);
+      // console.log(conversation);
     }
   };
 
@@ -146,21 +151,25 @@ function Chat() {
     //e.target.value to wartość w naszym inpucie!!!
     if (e.key === "Enter") {
       if (!e.target.value) {
-        return alert("nie mozna pustej wiadomosci wysylac");
-      }
-      setConversations([
-        {
-          who: "user",
-          content: {
-            text: {
-              text: e.target.value,
+        // return alert("nie mozna pustej wiadomosci wysylac");
+        // TODO done?- nie moze wyskakiwac alert po wyslaniu pustej wiadomosci,
+        // zamiast tego - przycisk nie powinien dzialac i nie powinno sie nic dziać
+      } else {
+        setConversations([
+          {
+            who: "user",
+            content: {
+              text: {
+                text: e.target.value,
+              },
             },
           },
-        },
-        ...conversations,
-      ]);
-      // we will send request to text query route
-      textQuery(e.target.value);
+          ...conversations,
+        ]);
+        // we will send request to text query route
+        textQuery(e.target.value);
+      }
+
       e.target.value = "";
       e.preventDefault();
     }

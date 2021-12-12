@@ -53,32 +53,32 @@ Users = [
       },
     ],
 
-    userMessages: [
-      {
-        _id: "1",
-        textContent: "This is a sample user message",
-      },
-      {
-        _id: "2",
-        textContent: "This is another sample user message",
-      },
-    ],
+    // userMessages: [
+    //   {
+    //     _id: "1",
+    //     textContent: "This is a sample user message",
+    //   },
+    //   {
+    //     _id: "2",
+    //     textContent: "This is another sample user message",
+    //   },
+    // ],
 
-    chatbotMessages: [
-      // moze zrobic jakies rodzaje wiadomosci,
-      // a moze zrobic po prostu jeden obiekt wiadomosci,
-      // chyba lepiej zrobic rozne rodzaje,
-      // np. 1) sam text
-      // 2) jakis "carousel" z itemami
-      // NA RAZIE TO ZOSTAWMY, BO NIE WIADOMO JAK DIALOGFLOW DZIAŁA
-      {
-        _id: "1",
-        textContent: "This is a sample chatbot response",
-      },
-      {
-        _id: "2",
-        textContent: "This is another sample chatbot response",
-      },
-    ],
+    // chatbotMessages: [
+    //   // moze zrobic jakies rodzaje wiadomosci,
+    //   // a moze zrobic po prostu jeden obiekt wiadomosci,
+    //   // chyba lepiej zrobic rozne rodzaje,
+    //   // np. 1) sam text
+    //   // 2) jakis "carousel" z itemami
+    //   // NA RAZIE TO ZOSTAWMY, BO NIE WIADOMO JAK DIALOGFLOW DZIAŁA
+    //   {
+    //     _id: "1",
+    //     textContent: "This is a sample chatbot response",
+    //   },
+    //   {
+    //     _id: "2",
+    //     textContent: "This is another sample chatbot response",
+    //   },
+    // ],
   },
 ];

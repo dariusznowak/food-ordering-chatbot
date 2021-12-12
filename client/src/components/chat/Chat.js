@@ -83,14 +83,44 @@ function Chat() {
       // requesta ustawiamy tak jak body zwracane z api dialogflow'a !!!
       const content = response.data.fulfillmentMessages[0];
 
-      console.log(response.data.fulfillmentMessages);
+      let receivedMessages = [];
+      // console.log(response.data.fulfillmentMessages);
+      response.data.fulfillmentMessages.map((element) => {
+        if (element.hasOwnProperty("payload")) {
+          //TODO - trzeba stworzyc na froncie specjalny typ wiadomosci wyswitlajacy karuzele ze zdjeciami
+          receivedMessages.push({
+            who: "bot",
+            content: {
+              text: {
+                // text: element.payload.fields,
+                text: "element.payload.fields",
+              },
+            },
+          });
+        } else {
+          receivedMessages.push({
+            who: "bot",
+            content: {
+              text: {
+                text: element.text.text,
+              },
+            },
+          });
+        }
+      });
+      receivedMessages = receivedMessages.reverse();
 
-      conversation = {
-        who: "bot",
-        content: content,
-      };
+      console.log(conversation);
+      console.log(receivedMessages);
+
+      // conversation = {
+      //   who: "bot",
+      //   content: content,
+      // };
+
       // setConversations([]); //mozna tak na szybko oproznic localstorage
-      setConversations([conversation, userMessage, ...conversations]);
+      // setConversations([conversation, userMessage, ...conversations]);
+      setConversations([...receivedMessages, userMessage, ...conversations]);
 
       // console.log(conversation);
     } catch (error) {

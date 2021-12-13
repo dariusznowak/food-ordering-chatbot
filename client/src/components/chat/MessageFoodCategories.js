@@ -12,7 +12,7 @@ function MessageFoodCategories(props) {
             <p>{foodCategory.structValue.fields.categoryName.stringValue}</p>
             <img
               src={foodCategory.structValue.fields.categoryImgUrl.stringValue}
-              alt={foodCategory.structValue.fields.imgAlt.stringValue}
+              alt={foodCategory.structValue.fields.categoryImgAlt.stringValue}
             ></img>
           </div>
         );

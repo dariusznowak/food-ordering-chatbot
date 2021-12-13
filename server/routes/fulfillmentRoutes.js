@@ -50,7 +50,7 @@ router.post("/fulfillment", async (req, res) => {
     //   categoryName: "Indian",
     //   categoryImgUrl:
     //     "https://images.ctfassets.net/uexfe9h31g3m/4L61DHFmM8XRx1yrPjbZxc/4abddf99032667a9777cd99e51c1dbe1/butter-chicken.jpg?w=1024&h=768&fm=webp&fit=thumb&q=90",
-    //   imgAlt: "indian_food_category_img",
+    //   categoryImgAlt: "indian_food_category_img",
     // });
 
     // food.save();

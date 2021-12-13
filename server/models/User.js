@@ -1,5 +1,31 @@
 const mongoose = require("mongoose");
 
+const CartItem = new mongoose.Schema({
+  totalCost: { type: Number },
+  items: [
+    {
+      itemId: { type: String },
+      quantity: { type: Number },
+    },
+  ],
+});
+
+const Cart = new mongoose.Schema({
+  totalCost: { type: Number },
+  items: [CartItem],
+});
+
+const Order = new mongoose.Schema(
+  {
+    status: { type: String },
+    totalCost: { type: Number },
+    items: [CartItem],
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const User = mongoose.model(
   "User",
   new mongoose.Schema(
@@ -11,12 +37,8 @@ const User = mongoose.model(
       phoneNumber: { type: String, unique: true },
       password: { type: String },
 
-      cart: {
-        totalcost: { type: String },
-        products: [{}],
-      },
-
-      //
+      cart: [Cart],
+      orders: [Order],
     },
     {
       timestamps: true,

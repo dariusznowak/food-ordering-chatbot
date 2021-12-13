@@ -112,8 +112,8 @@ function Chat() {
       });
       receivedMessages = receivedMessages.reverse();
 
-      console.log(conversation);
-      console.log(receivedMessages);
+      //console.log(conversation);
+      //console.log(receivedMessages);
 
       // conversation = {
       //   who: "bot",

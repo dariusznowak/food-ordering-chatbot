@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
+import MessageFoodCategories from "./MessageFoodCategories";
+import MessageRestaurants from "./MessageRestaurants";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
@@ -83,12 +85,45 @@ function Chat() {
       // requesta ustawiamy tak jak body zwracane z api dialogflow'a !!!
       const content = response.data.fulfillmentMessages[0];
 
-      conversation = {
-        who: "bot",
-        content: content,
-      };
+      let receivedMessages = [];
+      // console.log(response.data.fulfillmentMessages);
+      response.data.fulfillmentMessages.map((element) => {
+        if (element.hasOwnProperty("payload")) {
+          //TODO - trzeba stworzyc na froncie specjalny typ wiadomosci wyswitlajacy karuzele ze zdjeciami
+          receivedMessages.push({
+            who: "bot",
+            content: {
+              text: {
+                // text: element.payload.fields,
+                text: "to jest food categories",
+              },
+            },
+            payload: element.payload,
+          });
+        } else {
+          receivedMessages.push({
+            who: "bot",
+            content: {
+              text: {
+                text: element.text.text,
+              },
+            },
+          });
+        }
+      });
+      receivedMessages = receivedMessages.reverse();
+
+      //console.log(conversation);
+      //console.log(receivedMessages);
+
+      // conversation = {
+      //   who: "bot",
+      //   content: content,
+      // };
+
       // setConversations([]); //mozna tak na szybko oproznic localstorage
-      setConversations([conversation, userMessage, ...conversations]);
+      // setConversations([conversation, userMessage, ...conversations]);
+      setConversations([...receivedMessages, userMessage, ...conversations]);
 
       // console.log(conversation);
     } catch (error) {
@@ -119,6 +154,9 @@ function Chat() {
 
       const content = response.data.fulfillmentMessages[0];
 
+      console.log("eventQuery siemka");
+      console.log(response.data.fulfillmentMessages);
+
       let conversation = {
         who: "bot",
         content: content,
@@ -127,7 +165,7 @@ function Chat() {
 
       setConversations([conversation, ...conversations]);
 
-      console.log(conversation);
+      //console.log(conversation);
     } catch (error) {
       let conversation = {
         who: "bot",
@@ -138,7 +176,7 @@ function Chat() {
         },
       };
       setConversations([conversation, ...conversations]);
-      console.log(conversation);
+      // console.log(conversation);
     }
   };
 
@@ -146,21 +184,25 @@ function Chat() {
     //e.target.value to wartość w naszym inpucie!!!
     if (e.key === "Enter") {
       if (!e.target.value) {
-        return alert("nie mozna pustej wiadomosci wysylac");
-      }
-      setConversations([
-        {
-          who: "user",
-          content: {
-            text: {
-              text: e.target.value,
+        // return alert("nie mozna pustej wiadomosci wysylac");
+        // TODO done?- nie moze wyskakiwac alert po wyslaniu pustej wiadomosci,
+        // zamiast tego - przycisk nie powinien dzialac i nie powinno sie nic dziać
+      } else {
+        setConversations([
+          {
+            who: "user",
+            content: {
+              text: {
+                text: e.target.value,
+              },
             },
           },
-        },
-        ...conversations,
-      ]);
-      // we will send request to text query route
-      textQuery(e.target.value);
+          ...conversations,
+        ]);
+        // we will send request to text query route
+        textQuery(e.target.value);
+      }
+
       e.target.value = "";
       e.preventDefault();
     }
@@ -173,7 +215,36 @@ function Chat() {
         <Sidebar />
         <div className="chat">
           <div className="chat__body">
+            {/* trzeba bedzie zrobic tak, zeby w conversations byly wszystkie wiadomosci i zeby zwracalo taki komponent jaki trzeba */}
             {conversations.map((message, index) => {
+              if (message.hasOwnProperty("payload")) {
+                // console.log(message);
+                if (
+                  message.payload.fields.messageType.stringValue ===
+                  "food_categories"
+                ) {
+                  return (
+                    <MessageFoodCategories
+                      key={index}
+                      // categoryName="Indian"
+                      // imgUrl=""
+                      // imgAlt=""
+                      data={message.payload.fields.food.listValue.values}
+                    />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "restaurant_list"
+                ) {
+                  return (
+                    <MessageRestaurants
+                      key={index}
+                      data={message.payload.fields.restaurants.listValue.values}
+                    />
+                  );
+                }
+              }
+
               return (
                 <MessageStandard
                   key={index}

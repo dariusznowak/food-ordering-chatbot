@@ -52,6 +52,7 @@ router.post("/textQuery", async (req, res) => {
   }
   //wysylanie responsa do frontendu
   res.send(result);
+  //console.log(result);
 });
 
 router.post("/eventQuery", async (req, res) => {

@@ -44,7 +44,7 @@ router.post("/fulfillment", async (req, res) => {
   });
 
   //tworzenie payload'a z kategoriami jedzenia
-  intentMap.set("order food", async (agent) => {
+  intentMap.set("orderFood", async (agent) => {
     await agent.add(req.body.queryResult.fulfillmentText);
     const payload = await getFoodCategories();
     await agent.add(
@@ -55,13 +55,16 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
-  /* //TODO: Trzeba zrobic obsluge tego intentu z dialogflow. Komponent odpowiedzialny za wyswietlanie restauracji z danej
-    // kategorii juz jest i dziala 
+  //TODO: Trzeba zrobic obsluge tego intentu z dialogflow. Komponent odpowiedzialny za wyswietlanie restauracji z danej
+  // kategorii juz jest i dziala
   //tworzenie payload'a z restauracjami z podanej kategorii
-  intentMap.set("choose food category", async (agent) => {
-  // intentMap.set("order food", async (agent) => {
-    //agent.add(req.body.queryResult.fulfillmentText);
-    const payload = await getRestaurantFromCategory("Indian");
+  //intentMap.set("choose food category", async (agent) => {
+  intentMap.set("orderFood.chooseCategory", async (agent) => {
+    agent.add(req.body.queryResult.fulfillmentText);
+    //console.log(req.body.queryResult.parameters.foodcategory);
+    const payload = await getRestaurantFromCategory(
+      req.body.queryResult.parameters.foodcategory
+    );
     // const payload = await getRestaurantFromCategory(parameter - np: dialogflow zczytal ze chcę pizzę);
     agent.add(
       new Payload(agent.UNSPECIFIED, payload, {
@@ -70,7 +73,6 @@ router.post("/fulfillment", async (req, res) => {
       })
     );
   });
-*/
 
   agent.handleRequest(intentMap);
 });

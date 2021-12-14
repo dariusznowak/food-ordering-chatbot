@@ -9,6 +9,7 @@ async function getRestaurantFromCategory(categoryName) {
   const payload = {
     restaurants,
     messageType: "restaurant_list",
+    categoryName: categoryName,
   };
 
   return payload;

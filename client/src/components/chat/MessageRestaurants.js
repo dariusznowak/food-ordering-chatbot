@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 function MessageRestaurants(props) {
-  console.log(props.data);
+  // console.log(props.data);
 
   return (
     <div className="messageRestaurants__body">

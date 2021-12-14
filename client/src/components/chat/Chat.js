@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
+import MessageRestaurantItems from "./MessageRestaurantItems";
 import MessageRestaurants from "./MessageRestaurants";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
@@ -13,6 +14,8 @@ import Sidebar from "../sidebar/Sidebar";
 
 import { UserContext } from "../loginAndRegister/UserContext";
 
+import { getEventToTrigger } from "./getEventToTrigger";
+
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
 function Chat() {
@@ -21,6 +24,9 @@ function Chat() {
     const localStorageData = localStorage.getItem("conversations");
     return localStorageData ? JSON.parse(localStorageData) : [];
   });
+
+  //tutaj dam sobie stan w ktorym ustawie eventy do strigerowania
+  const [eventToTrigger, setEventToTrigger] = useState("");
 
   const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
     useContext(UserContext);
@@ -39,6 +45,13 @@ function Chat() {
       }
     } /*, []*/
   );
+
+  function handleEventToTrigger() {
+    if (eventToTrigger !== "") {
+      eventQuery(eventToTrigger);
+      setEventToTrigger("");
+    }
+  }
 
   // const [toDoTable, setToDoTask] = useState(() => {
   //   const localStorageData = localStorage.getItem("toDoTable");
@@ -87,6 +100,8 @@ function Chat() {
 
       let receivedMessages = [];
       // console.log(response.data.fulfillmentMessages);
+      let eventToTrigger;
+
       response.data.fulfillmentMessages.map((element) => {
         if (element.hasOwnProperty("payload")) {
           //TODO - trzeba stworzyc na froncie specjalny typ wiadomosci wyswitlajacy karuzele ze zdjeciami
@@ -100,6 +115,12 @@ function Chat() {
             },
             payload: element.payload,
           });
+
+          //tutaj mozna by wywolac funkcje ktora jesli trzeba - to wywola event,
+          //np. po wyswietleniu restauracji z kategorii "pizza" - wywola sie event,
+          //ktory odpali nam odpowiedniego intenta - tutaj bylby to intent, ktory
+          //pobieralby ktora pizza restauracje wybieram...
+          eventToTrigger = getEventToTrigger(element);
         } else {
           receivedMessages.push({
             who: "bot",
@@ -124,6 +145,12 @@ function Chat() {
       // setConversations([]); //mozna tak na szybko oproznic localstorage
       // setConversations([conversation, userMessage, ...conversations]);
       setConversations([...receivedMessages, userMessage, ...conversations]);
+
+      if (eventToTrigger) {
+        console.log(eventToTrigger);
+        //eventQuery(eventToTrigger);
+        setEventToTrigger(eventToTrigger);
+      }
 
       // console.log(conversation);
     } catch (error) {
@@ -154,8 +181,8 @@ function Chat() {
 
       const content = response.data.fulfillmentMessages[0];
 
-      console.log("eventQuery siemka");
-      console.log(response.data.fulfillmentMessages);
+      // console.log("eventQuery siemka");
+      // console.log(response.data.fulfillmentMessages);
 
       let conversation = {
         who: "bot",
@@ -216,6 +243,7 @@ function Chat() {
         <div className="chat">
           <div className="chat__body">
             {/* trzeba bedzie zrobic tak, zeby w conversations byly wszystkie wiadomosci i zeby zwracalo taki komponent jaki trzeba */}
+
             {conversations.map((message, index) => {
               if (message.hasOwnProperty("payload")) {
                 // console.log(message);
@@ -244,7 +272,6 @@ function Chat() {
                   );
                 }
               }
-
               return (
                 <MessageStandard
                   key={index}
@@ -253,6 +280,15 @@ function Chat() {
                 />
               );
             })}
+            {
+              //to miejsce to HIT - pół dnia nad tym myślałem;
+              //teraz tutaj sie wywoluje funkcja ktora wywoluje EVENT w dialogflow,
+              //np. po wybraniu kategorii "pizza" -> odpala sie event ktory wlacza intent
+              //odpowiedzialny za
+              eventToTrigger !== ""
+                ? handleEventToTrigger()
+                : console.log("hahaha " + eventToTrigger)
+            }
           </div>
           <div className="chat__footer">
             <form>

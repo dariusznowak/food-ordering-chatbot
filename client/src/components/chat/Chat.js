@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
+import MessageRestaurants from "./MessageRestaurants";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
@@ -215,7 +216,6 @@ function Chat() {
         <div className="chat">
           <div className="chat__body">
             {/* trzeba bedzie zrobic tak, zeby w conversations byly wszystkie wiadomosci i zeby zwracalo taki komponent jaki trzeba */}
-
             {conversations.map((message, index) => {
               if (message.hasOwnProperty("payload")) {
                 // console.log(message);
@@ -230,6 +230,16 @@ function Chat() {
                       // imgUrl=""
                       // imgAlt=""
                       data={message.payload.fields.food.listValue.values}
+                    />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "restaurant_list"
+                ) {
+                  return (
+                    <MessageRestaurants
+                      key={index}
+                      data={message.payload.fields.restaurants.listValue.values}
                     />
                   );
                 }

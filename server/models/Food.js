@@ -3,13 +3,20 @@ const mongoose = require("mongoose");
 const Item = new mongoose.Schema({
   itemName: { type: String },
   itemDescription: { type: String },
-  itemImgUrl: { type: String },
-  itemImgAlt: { type: String },
   price: { type: Number },
+  //itemImgUrl: { type: String },
+  //itemImgAlt: { type: String },
 });
 
 const Restaurant = new mongoose.Schema({
   restaurantName: { type: String, unique: true },
+  // menu: [
+  //   {
+  //     itemName: { type: String },
+  //     itemDescription: { type: String },
+  //     price: { type: Number },
+  //   },
+  // ],
   menu: [Item],
   restaurantImgUrl: { type: String },
   restaurantImgAlt: { type: String },

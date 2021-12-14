@@ -17,7 +17,7 @@ const Cart = new mongoose.Schema({
 
 const Order = new mongoose.Schema(
   {
-    status: { type: String },
+    //status: { type: String },
     totalCost: { type: Number },
     items: [CartItem],
   },

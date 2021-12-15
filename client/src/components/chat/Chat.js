@@ -96,7 +96,7 @@ function Chat() {
         textQueryVariables
       ); //potem server wysyla res
       // requesta ustawiamy tak jak body zwracane z api dialogflow'a !!!
-      const content = response.data.fulfillmentMessages[0];
+      // const content = response.data.fulfillmentMessages[0];
 
       let receivedMessages = [];
       // console.log(response.data.fulfillmentMessages);
@@ -147,8 +147,7 @@ function Chat() {
       setConversations([...receivedMessages, userMessage, ...conversations]);
 
       if (eventToTrigger) {
-        console.log(eventToTrigger);
-        //eventQuery(eventToTrigger);
+        // console.log(eventToTrigger);
         setEventToTrigger(eventToTrigger);
       }
 
@@ -270,6 +269,16 @@ function Chat() {
                       data={message.payload.fields.restaurants.listValue.values}
                     />
                   );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "menu_items_list"
+                ) {
+                  return (
+                    <MessageRestaurantItems
+                      key={index}
+                      data={message.payload.fields.menuItems.listValue.values}
+                    />
+                  );
                 }
               }
               return (
@@ -285,9 +294,7 @@ function Chat() {
               //teraz tutaj sie wywoluje funkcja ktora wywoluje EVENT w dialogflow,
               //np. po wybraniu kategorii "pizza" -> odpala sie event ktory wlacza intent
               //odpowiedzialny za
-              eventToTrigger !== ""
-                ? handleEventToTrigger()
-                : console.log("hahaha " + eventToTrigger)
+              eventToTrigger !== "" ? handleEventToTrigger() : true
             }
           </div>
           <div className="chat__footer">

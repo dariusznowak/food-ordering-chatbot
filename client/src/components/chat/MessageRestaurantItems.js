@@ -24,42 +24,36 @@ function MessageRestaurantItems(props) {
 
   return (
     <div className="itemCard__body">
-      {/* {props.data.map((item) => {
+      {props.data.map((item) => {
+        // console.log(item);
+
         return (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ maxWidth: 325 }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {item.structValue.fields.restaurantName.stringValue}
+                {item.structValue.fields.itemName.stringValue}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {item.structValue.fields.itemDescription.stringValue}
+              </Typography>
+              <Typography gutterBottom variant="h5" component="div">
+                {item.structValue.fields.price.numberValue} PLN
               </Typography>
             </CardContent>
+
+            <CardActions>
+              <Button
+                size="small"
+                onClick={() => {
+                  addItemToCart("Chicken Lover");
+                }}
+              >
+                Add to cart
+              </Button>
+            </CardActions>
           </Card>
         );
-      })} */}
-      <Card sx={{ maxWidth: 325 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Tytul
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-          <Typography gutterBottom variant="h5" component="div">
-            25.50 PLN
-          </Typography>
-        </CardContent>
-
-        <CardActions>
-          <Button
-            size="small"
-            onClick={() => {
-              addItemToCart("Chicken Lover");
-            }}
-          >
-            Add to cart
-          </Button>
-        </CardActions>
-      </Card>
+      })}
     </div>
   );
 }

@@ -16,6 +16,7 @@ const { Payload } = require("dialogflow-fulfillment");
 
 const getFoodCategories = require("./fulfillmentFunctions/getFoodCategories.js");
 const getRestaurantFromCategory = require("./fulfillmentFunctions/getRestaurantFromCategory.js");
+const getItemsFromRestaurant = require("./fulfillmentFunctions/getItemsFromRestaurant.js");
 
 // const secret = "secret123";
 
@@ -55,17 +56,54 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
-  //TODO: Trzeba zrobic obsluge tego intentu z dialogflow. Komponent odpowiedzialny za wyswietlanie restauracji z danej
-  // kategorii juz jest i dziala
-  //tworzenie payload'a z restauracjami z podanej kategorii
-  //intentMap.set("choose food category", async (agent) => {
   intentMap.set("orderFood.chooseCategory", async (agent) => {
     agent.add(req.body.queryResult.fulfillmentText);
     //console.log(req.body.queryResult.parameters.foodcategory);
     const payload = await getRestaurantFromCategory(
       req.body.queryResult.parameters.foodcategory
     );
-    // const payload = await getRestaurantFromCategory(parameter - np: dialogflow zczytal ze chcę pizzę);
+    agent.add(
+      new Payload(agent.UNSPECIFIED, payload, {
+        rawPayload: true,
+        sendAsMessage: true,
+      })
+    );
+  });
+
+  // console.log(req.body);
+
+  intentMap.set("chooseIndianRestaurant", async (agent) => {
+    agent.add(req.body.queryResult.fulfillmentText);
+    const payload = await getItemsFromRestaurant(
+      req.body.queryResult.parameters.indianrestaurant
+    );
+    agent.add(
+      new Payload(agent.UNSPECIFIED, payload, {
+        rawPayload: true,
+        sendAsMessage: true,
+      })
+    );
+  });
+
+  intentMap.set("choosePizzaRestaurant", async (agent) => {
+    agent.add(req.body.queryResult.fulfillmentText);
+    console.log(req.body);
+    const payload = await getItemsFromRestaurant(
+      req.body.queryResult.parameters.pizzarestaurant
+    );
+    agent.add(
+      new Payload(agent.UNSPECIFIED, payload, {
+        rawPayload: true,
+        sendAsMessage: true,
+      })
+    );
+  });
+
+  intentMap.set("chooseKebabRestaurant", async (agent) => {
+    agent.add(req.body.queryResult.fulfillmentText);
+    const payload = await getItemsFromRestaurant(
+      req.body.queryResult.parameters.kebabrestaurant
+    );
     agent.add(
       new Payload(agent.UNSPECIFIED, payload, {
         rawPayload: true,

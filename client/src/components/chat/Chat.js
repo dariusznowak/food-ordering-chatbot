@@ -5,6 +5,7 @@ import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
 import MessageRestaurantItems from "./MessageRestaurantItems";
 import MessageRestaurants from "./MessageRestaurants";
+import MessageCreateOrderItems from "./MessageCreateOrderItems";
 import MessageCart from "./MessageCart";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
@@ -243,7 +244,6 @@ function Chat() {
         <div className="chat">
           <div className="chat__body">
             {/* trzeba bedzie zrobic tak, zeby w conversations byly wszystkie wiadomosci i zeby zwracalo taki komponent jaki trzeba */}
-
             {conversations.map((message, index) => {
               if (message.hasOwnProperty("payload")) {
                 // console.log(message);

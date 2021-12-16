@@ -15,44 +15,32 @@ function MessageRestaurantItems(props) {
   const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
     useContext(UserContext);
 
-  const addItemToCart = (itemName) => {
-    //na razie nie rozwijam dalej
-    //bo nie wiem czy wgl taki przycisk dawac
-    console.log("Dodanie do karty " + itemName);
-    console.log(userInfo);
-  };
+  // const addItemToCart = (itemName) => {
+  //   //na razie nie rozwijam dalej
+  //   //bo nie wiem czy wgl taki przycisk dawac
+  //   console.log("Dodanie do karty " + itemName);
+  //   console.log(userInfo);
+  // };
 
   return (
     <div className="itemCard__body">
       {props.data.map((item, index) => {
         // console.log(item);
-
         return (
-          <Card sx={{ maxWidth: 325 }}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {"#"}
-                {index + 1} {item.structValue.fields.itemName.stringValue}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.structValue.fields.itemDescription.stringValue}
-              </Typography>
-              <Typography gutterBottom variant="h5" component="div">
-                {item.structValue.fields.price.numberValue} PLN
-              </Typography>
-            </CardContent>
-
-            <CardActions>
-              <Button
-                size="small"
-                onClick={() => {
-                  addItemToCart("Chicken Lover");
-                }}
-              >
-                Add to cart
-              </Button>
-            </CardActions>
-          </Card>
+          // <Card sx={{ maxWidth: 325 }}>
+          <div className="itemCard__singleCard">
+            <div className="itemCard__itemName">
+              {"#"}
+              {index + 1} {item.structValue.fields.itemName.stringValue}{" "}
+            </div>
+            <p className="itemCard__description">
+              {item.structValue.fields.itemDescription.stringValue}
+            </p>
+            <div className="itemCard__price">
+              {item.structValue.fields.price.numberValue} PLN
+            </div>
+          </div>
+          // </Card>
         );
       })}
     </div>

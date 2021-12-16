@@ -12,23 +12,29 @@ async function changeQuantityOfItem(data) {
   let itemName;
   let resultMessage;
 
+  //   console.log("newQuantity ============================== " + newQuantity);
+  //   console.log("itemNumber ============================== " + itemNumber);
+
   if (cartItemsData[0].cart.length === 0) {
     resultMessage = "You can't change anything in empty basket!";
     return resultMessage;
   }
 
-  if (itemNumber > cartItemsData[0].length || itemNumber < 0) {
+  if (itemNumber > cartItemsData[0].cart.length || itemNumber < 1) {
     resultMessage = "Wrong item number! Please choose correct one from cart.";
     if (newQuantity < 1) {
-      resultMessage = "Wrong item number and item amount!";
+      resultMessage = "Wrong item number and amount!";
     }
     return resultMessage;
-  } else if (
-    newQuantity < 1 &&
-    itemNumber > 0 &&
-    itemNumber < cartItemsData[0].length
-  ) {
-    resultMessage = "Wrong amount!";
+  }
+
+  if (newQuantity < 1) {
+    resultMessage = "Wrong item amount!";
+    return resultMessage;
+  }
+
+  if (newQuantity > 20) {
+    resultMessage = "Wrong item amount! Max. amount for item is 20";
     return resultMessage;
   }
 

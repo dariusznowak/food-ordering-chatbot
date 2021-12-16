@@ -15,7 +15,7 @@ function MessageRestaurants(props) {
     <div className="messageRestaurants__body">
       {props.data.map((restaurant) => {
         return (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card sx={{ width: 250, marginTop: 2 }}>
             <CardMedia
               component="img"
               height="140"

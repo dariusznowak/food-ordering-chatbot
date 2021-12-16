@@ -18,10 +18,12 @@ function MessageCart(props) {
               </div>
               <div className="messageCart__priceAndQuantity">
                 <div className="messageCart__quantity">
+                  {/* QTY: errrorr */}
                   QTY: {item.structValue.fields.quantity.numberValue}
                 </div>
 
                 <div className="messageCart__price">
+                  {/* total: errrorr$ */}
                   total: {item.structValue.fields.price.numberValue}$
                 </div>
               </div>

@@ -25,7 +25,7 @@ const deleteItem = require("./fulfillmentFunctions/deleteItem");
 // const secret = "secret123";
 
 router.post("/fulfillment", async (req, res) => {
-  let intent = req.body.queryResult.intent.displayName;
+  let detectedIntent = req.body.queryResult.intent.displayName;
 
   const agent = new WebhookClient({ request: req, response: res });
 
@@ -93,6 +93,7 @@ router.post("/fulfillment", async (req, res) => {
   intentMap.set("chooseIndianRestaurant", async (agent) => {
     agent.add(req.body.queryResult.fulfillmentText);
     const payload = await getItemsFromRestaurant(
+      //podajemy nazwe restauracji np. "Casta Restaurant"
       req.body.queryResult.parameters.indianrestaurant
     );
     agent.add(
@@ -130,42 +131,53 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
-  intentMap.set("chooseKebabRestaurant.addItemToCart - yes", async (agent) => {
-    const addToCartResult = await addItemToCart(req.body);
-    addToCartResult !== ""
-      ? agent.add('"' + addToCartResult + '" item added to cart')
-      : agent.add("Wrong item number! Please try again.");
-  });
+  console.log(req.body.queryResult.intent.displayName);
 
-  intentMap.set("choosePizzaRestaurant.addItemToCart - yes", async (agent) => {
-    const addToCartResult = await addItemToCart(req.body);
-    addToCartResult !== ""
-      ? agent.add('"' + addToCartResult + '" item added to cart')
-      : agent.add("Wrong item number! Please try again.");
-  });
+  if (
+    detectedIntent === "chooseKebabRestaurant.addItemToCart - yes" ||
+    detectedIntent === "choosePizzaRestaurant.addItemToCart - yes" ||
+    detectedIntent === "chooseIndianRestaurant.addItemToCart - yes"
+  ) {
+    intentMap.set(detectedIntent, async (agent) => {
+      const addToCartResult = await addItemToCart(req.body);
+      if (addToCartResult !== "") {
+        agent.add('"' + addToCartResult + '" item added to cart');
+        const payload = await getItemsFromRestaurant(
+          //znowu to samo co wyzej, podajemy nazwe restauracji
+          req.body.queryResult.parameters.restaurantName
+        );
+        agent.add(
+          new Payload(agent.UNSPECIFIED, payload, {
+            rawPayload: true,
+            sendAsMessage: true,
+          })
+        );
+      } else {
+        agent.add("Wrong item number! Please try again.");
+      }
+    });
+  }
 
-  intentMap.set("chooseIndianRestaurant.addItemToCart - yes", async (agent) => {
-    const addToCartResult = await addItemToCart(req.body);
-    addToCartResult !== ""
-      ? agent.add('"' + addToCartResult + '" item added to cart')
-      : agent.add("Wrong item number! Please try again.");
-  });
-
-  //intent do wyswietlania koszyka
-  intentMap.set("showCart", async (agent) => {
-    const payload = await getCartItems(req.body);
-    if (payload != false) {
-      agent.add(req.body.queryResult.fulfillmentText);
-      agent.add(
-        new Payload(agent.UNSPECIFIED, payload, {
-          rawPayload: true,
-          sendAsMessage: true,
-        })
-      );
-    } else {
-      agent.add("Your basket is empty");
-    }
-  });
+  //intent do wyswietlania koszyka (rowniez przed potwierdzeniem zamowienia)
+  if (detectedIntent === "showCart" || detectedIntent === "createOrder") {
+    intentMap.set(detectedIntent, async (agent) => {
+      const payload = await getCartItems(req.body);
+      if (payload != false) {
+        detectedIntent === "showCart" &&
+          agent.add(req.body.queryResult.fulfillmentText);
+        agent.add(
+          new Payload(agent.UNSPECIFIED, payload, {
+            rawPayload: true,
+            sendAsMessage: true,
+          })
+        );
+        detectedIntent === "createOrder" &&
+          agent.add(req.body.queryResult.fulfillmentText);
+      } else {
+        agent.add("Your basket is empty");
+      }
+    });
+  }
 
   //intent do zmiany ilosci wskazanego itemu z koszyka
   intentMap.set("showCart.changeQuantityOfItem", async (agent) => {
@@ -196,6 +208,27 @@ router.post("/fulfillment", async (req, res) => {
       );
     }
   });
+
+  //intent pytajacy o potwierdzenie adresu zamowienia
+  intentMap.set("createOrder.confirmCart - yes", async (agent) => {
+    const userId = req.body.session.split("bot-session")[1];
+    const user = await User.findOne({ _id: userId });
+    console.log("Your current delivery address: " + user.residence);
+    agent.add("Residence address: " + user.residence);
+    agent.add(req.body.queryResult.fulfillmentText);
+  });
+
+  //intent tworzacy zamowienie w bazie - po potwierdzeniu adresu
+  intentMap.set(
+    "createOrder.confirmCart.confirmAddress - yes",
+    async (agent) => {
+      const userId = req.body.session.split("bot-session")[1];
+      const user = await User.findOne({ _id: userId });
+      // console.log("Your current delivery address: " + user.residence);
+      // agent.add("Residence address: " + user.residence);
+      // agent.add(req.body.queryResult.fulfillmentText);
+    }
+  );
 
   agent.handleRequest(intentMap);
 });

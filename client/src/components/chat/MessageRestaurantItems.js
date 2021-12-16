@@ -24,14 +24,15 @@ function MessageRestaurantItems(props) {
 
   return (
     <div className="itemCard__body">
-      {props.data.map((item) => {
+      {props.data.map((item, index) => {
         // console.log(item);
 
         return (
           <Card sx={{ maxWidth: 325 }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {item.structValue.fields.itemName.stringValue}
+                {"#"}
+                {index + 1} {item.structValue.fields.itemName.stringValue}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {item.structValue.fields.itemDescription.stringValue}

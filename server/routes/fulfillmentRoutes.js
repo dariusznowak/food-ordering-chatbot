@@ -17,6 +17,10 @@ const { Payload } = require("dialogflow-fulfillment");
 const getFoodCategories = require("./fulfillmentFunctions/getFoodCategories.js");
 const getRestaurantFromCategory = require("./fulfillmentFunctions/getRestaurantFromCategory.js");
 const getItemsFromRestaurant = require("./fulfillmentFunctions/getItemsFromRestaurant.js");
+const addItemToCart = require("./fulfillmentFunctions/addItemToCart.js");
+const getCartItems = require("./fulfillmentFunctions/getCartItems.js");
+const changeQuantityOfItem = require("./fulfillmentFunctions/changeQuantityOfItem");
+const deleteItem = require("./fulfillmentFunctions/deleteItem");
 
 // const secret = "secret123";
 
@@ -70,6 +74,20 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
+  intentMap.set("selectCategoryWithoutSeeingOptions", async (agent) => {
+    agent.add(req.body.queryResult.fulfillmentText);
+    //console.log(req.body.queryResult.parameters.foodcategory);
+    const payload = await getRestaurantFromCategory(
+      req.body.queryResult.parameters.foodcategory
+    );
+    agent.add(
+      new Payload(agent.UNSPECIFIED, payload, {
+        rawPayload: true,
+        sendAsMessage: true,
+      })
+    );
+  });
+
   // console.log(req.body);
 
   intentMap.set("chooseIndianRestaurant", async (agent) => {
@@ -110,6 +128,73 @@ router.post("/fulfillment", async (req, res) => {
         sendAsMessage: true,
       })
     );
+  });
+
+  intentMap.set("chooseKebabRestaurant.addItemToCart - yes", async (agent) => {
+    const addToCartResult = await addItemToCart(req.body);
+    addToCartResult !== ""
+      ? agent.add('"' + addToCartResult + '" item added to cart')
+      : agent.add("Wrong item number! Please try again.");
+  });
+
+  intentMap.set("choosePizzaRestaurant.addItemToCart - yes", async (agent) => {
+    const addToCartResult = await addItemToCart(req.body);
+    addToCartResult !== ""
+      ? agent.add('"' + addToCartResult + '" item added to cart')
+      : agent.add("Wrong item number! Please try again.");
+  });
+
+  intentMap.set("chooseIndianRestaurant.addItemToCart - yes", async (agent) => {
+    const addToCartResult = await addItemToCart(req.body);
+    addToCartResult !== ""
+      ? agent.add('"' + addToCartResult + '" item added to cart')
+      : agent.add("Wrong item number! Please try again.");
+  });
+
+  //intent do wyswietlania koszyka
+  intentMap.set("showCart", async (agent) => {
+    const payload = await getCartItems(req.body);
+    if (payload != false) {
+      agent.add(req.body.queryResult.fulfillmentText);
+      agent.add(
+        new Payload(agent.UNSPECIFIED, payload, {
+          rawPayload: true,
+          sendAsMessage: true,
+        })
+      );
+    } else {
+      agent.add("Your basket is empty");
+    }
+  });
+
+  //intent do zmiany ilosci wskazanego itemu z koszyka
+  intentMap.set("showCart.changeQuantityOfItem", async (agent) => {
+    const resultMessage = await changeQuantityOfItem(req.body);
+    agent.add(resultMessage);
+    if (resultMessage !== "You can't change anything in empty basket!") {
+      const payload = await getCartItems(req.body);
+      agent.add(
+        new Payload(agent.UNSPECIFIED, payload, {
+          rawPayload: true,
+          sendAsMessage: true,
+        })
+      );
+    }
+  });
+
+  //intent do usuniecia calej ilosci wskazanego itemu z koszyka
+  intentMap.set("showCart.deleteItem", async (agent) => {
+    const resultMessage = await deleteItem(req.body);
+    agent.add(resultMessage);
+    if (resultMessage !== "Couldn't delete anything. Basket is empty!") {
+      const payload = await getCartItems(req.body);
+      agent.add(
+        new Payload(agent.UNSPECIFIED, payload, {
+          rawPayload: true,
+          sendAsMessage: true,
+        })
+      );
+    }
   });
 
   agent.handleRequest(intentMap);

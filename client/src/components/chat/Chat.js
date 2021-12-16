@@ -5,6 +5,7 @@ import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
 import MessageRestaurantItems from "./MessageRestaurantItems";
 import MessageRestaurants from "./MessageRestaurants";
+import MessageCart from "./MessageCart";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
@@ -278,6 +279,13 @@ function Chat() {
                       key={index}
                       data={message.payload.fields.menuItems.listValue.values}
                     />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "cart_items_list"
+                ) {
+                  return (
+                    <MessageCart key={index} data={message.payload.fields} />
                   );
                 }
               }

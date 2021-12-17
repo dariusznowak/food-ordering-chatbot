@@ -21,6 +21,7 @@ const addItemToCart = require("./fulfillmentFunctions/addItemToCart.js");
 const getCartItems = require("./fulfillmentFunctions/getCartItems.js");
 const changeQuantityOfItem = require("./fulfillmentFunctions/changeQuantityOfItem");
 const deleteItem = require("./fulfillmentFunctions/deleteItem");
+const clearCart = require("./fulfillmentFunctions/clearCart");
 
 // const secret = "secret123";
 
@@ -214,8 +215,12 @@ router.post("/fulfillment", async (req, res) => {
     const userId = req.body.session.split("bot-session")[1];
     const user = await User.findOne({ _id: userId });
     console.log("Your current delivery address: " + user.residence);
-    agent.add("Residence address: " + user.residence);
-    agent.add(req.body.queryResult.fulfillmentText);
+    agent.add(
+      "Delivery address: " +
+        user.residence +
+        ". " +
+        req.body.queryResult.fulfillmentText
+    );
   });
 
   //intent tworzacy zamowienie w bazie - po potwierdzeniu adresu
@@ -224,11 +229,55 @@ router.post("/fulfillment", async (req, res) => {
     async (agent) => {
       const userId = req.body.session.split("bot-session")[1];
       const user = await User.findOne({ _id: userId });
-      // console.log("Your current delivery address: " + user.residence);
-      // agent.add("Residence address: " + user.residence);
-      // agent.add(req.body.queryResult.fulfillmentText);
+      let error = false;
+      let totalCost = 0;
+      user.cart.map((item) => {
+        totalCost += item.price;
+      });
+
+      User.updateOne(
+        { _id: userId },
+        {
+          $push: {
+            orders: { items: user.cart },
+          },
+        },
+        (err, success) => {
+          if (err) {
+            agent.add("Something went wrong");
+            error = true;
+          } else {
+            agent.add(
+              req.body.queryResult.fulfillmentText +
+                " " +
+                totalCost +
+                " $ has been placed"
+            );
+          }
+        }
+      );
+
+      //po dodaniu orderu nalezy wyczyscic koszyk
+      if (!error) {
+        let wasCartCleared = await clearCart(userId);
+        if (!wasCartCleared) {
+          agent.add("Something went wrong");
+        }
+      }
     }
   );
+
+  //intent czyszczacy koszyk
+  intentMap.set("clearCart - yes", async (agent) => {
+    const userId = req.body.session.split("bot-session")[1];
+    console.log("zaraz usune basket iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    let wasCartCleared = await clearCart(userId);
+    if (!wasCartCleared) {
+      agent.add("Something went wrong");
+    } else {
+      agent.add(req.body.queryResult.fulfillmentText);
+    }
+  });
 
   agent.handleRequest(intentMap);
 });

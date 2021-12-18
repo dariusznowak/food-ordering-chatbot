@@ -54,12 +54,12 @@ function Sidebar() {
               <p> ASSISTANT</p>
             </div>
           </Link>
-          <Link to="/usersettings" className="sidebar__link">
+          {/* <Link to="/usersettings" className="sidebar__link">
             <div className="sidebar__singleOption">
               <SettingsIcon />
               <p> User settings</p>
             </div>
-          </Link>
+          </Link> */}
 
           <Link to="/feedback" className="sidebar__link">
             <div className="sidebar__singleOption">

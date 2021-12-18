@@ -37,7 +37,7 @@ function MessageRestaurantItems(props) {
               {item.structValue.fields.itemDescription.stringValue}
             </p>
             <div className="itemCard__price">
-              {item.structValue.fields.price.numberValue} PLN
+              {item.structValue.fields.price.numberValue} zł
             </div>
           </div>
           // </Card>

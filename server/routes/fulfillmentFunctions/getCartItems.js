@@ -4,6 +4,7 @@ async function getCartItems(data) {
   const userId = data.session.split("bot-session")[1];
 
   let cartItems = await User.find({ _id: userId });
+
   let totalCost = 0;
 
   if (cartItems[0].cart.length === 0) {

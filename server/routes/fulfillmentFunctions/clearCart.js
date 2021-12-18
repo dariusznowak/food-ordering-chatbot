@@ -1,9 +1,6 @@
 const User = require("../../models/User");
 
 async function clearCart(userId) {
-  console.log(
-    userId + " iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-  );
   await User.updateOne(
     //znowu problematycznie z baza - tak sie usuwa z bazy!
     { _id: userId },

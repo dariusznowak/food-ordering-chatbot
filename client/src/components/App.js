@@ -48,12 +48,12 @@ function App() {
         <Route exact path="/login" component={Login} />
 
         <ProtectedRoute exact path="/" component={Chat} />
-        <ProtectedRoute
+        {/* <ProtectedRoute
           exact
           path="/usersettings"
           component={UserSettings}
           // isAuth={isAuth}
-        />
+        /> */}
         <ProtectedRoute
           exact
           path="/feedback"

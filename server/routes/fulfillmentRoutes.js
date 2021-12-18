@@ -27,19 +27,14 @@ const clearCart = require("./fulfillmentFunctions/clearCart");
 
 router.post("/fulfillment", async (req, res) => {
   let detectedIntent = req.body.queryResult.intent.displayName;
-
   const agent = new WebhookClient({ request: req, response: res });
 
-  // console.log("######################fulfillment##########################");
-  // console.log(req.body);
-
-  const fallback = (agent) => {
-    agent.add("I didn't understand");
-    agent.add("I'm sorry, can you try again?");
-  };
   let intentMap = new Map(); //to intents map we have intents with fulfillment enabled
 
-  intentMap.set("Default Fallback Intent", fallback);
+  intentMap.set("Default Fallback Intent", async (agent) => {
+    agent.add("I didn't understand");
+    agent.add("I'm sorry, can you try again?");
+  });
 
   //test//powitanie usera po imieniu po zalogowaniu
   intentMap.set("Welcome", async (agent) => {
@@ -75,9 +70,9 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
+  //intent do wyboru kategorii w dowolnym momencie rozmowy
   intentMap.set("selectCategoryWithoutSeeingOptions", async (agent) => {
     agent.add(req.body.queryResult.fulfillmentText);
-    //console.log(req.body.queryResult.parameters.foodcategory);
     const payload = await getRestaurantFromCategory(
       req.body.queryResult.parameters.foodcategory
     );
@@ -89,51 +84,28 @@ router.post("/fulfillment", async (req, res) => {
     );
   });
 
-  // console.log(req.body);
+  //intenty do wyboru restauracji
+  if (
+    detectedIntent === "chooseIndianRestaurant" ||
+    detectedIntent === "choosePizzaRestaurant" ||
+    detectedIntent === "chooseKebabRestaurant"
+  ) {
+    intentMap.set(detectedIntent, async (agent) => {
+      agent.add(req.body.queryResult.fulfillmentText);
+      const payload = await getItemsFromRestaurant(
+        //podajemy nazwe restauracji np. "Casta Restaurant"
+        req.body.queryResult.parameters.restaurantName
+      );
+      agent.add(
+        new Payload(agent.UNSPECIFIED, payload, {
+          rawPayload: true,
+          sendAsMessage: true,
+        })
+      );
+    });
+  }
 
-  intentMap.set("chooseIndianRestaurant", async (agent) => {
-    agent.add(req.body.queryResult.fulfillmentText);
-    const payload = await getItemsFromRestaurant(
-      //podajemy nazwe restauracji np. "Casta Restaurant"
-      req.body.queryResult.parameters.indianrestaurant
-    );
-    agent.add(
-      new Payload(agent.UNSPECIFIED, payload, {
-        rawPayload: true,
-        sendAsMessage: true,
-      })
-    );
-  });
-
-  intentMap.set("choosePizzaRestaurant", async (agent) => {
-    agent.add(req.body.queryResult.fulfillmentText);
-    console.log(req.body);
-    const payload = await getItemsFromRestaurant(
-      req.body.queryResult.parameters.pizzarestaurant
-    );
-    agent.add(
-      new Payload(agent.UNSPECIFIED, payload, {
-        rawPayload: true,
-        sendAsMessage: true,
-      })
-    );
-  });
-
-  intentMap.set("chooseKebabRestaurant", async (agent) => {
-    agent.add(req.body.queryResult.fulfillmentText);
-    const payload = await getItemsFromRestaurant(
-      req.body.queryResult.parameters.kebabrestaurant
-    );
-    agent.add(
-      new Payload(agent.UNSPECIFIED, payload, {
-        rawPayload: true,
-        sendAsMessage: true,
-      })
-    );
-  });
-
-  console.log(req.body.queryResult.intent.displayName);
-
+  //intenty do dodawania wybranego itemu do koszyka
   if (
     detectedIntent === "chooseKebabRestaurant.addItemToCart - yes" ||
     detectedIntent === "choosePizzaRestaurant.addItemToCart - yes" ||
@@ -229,6 +201,7 @@ router.post("/fulfillment", async (req, res) => {
     async (agent) => {
       const userId = req.body.session.split("bot-session")[1];
       const user = await User.findOne({ _id: userId });
+      console.log(user);
       let error = false;
       let totalCost = 0;
       user.cart.map((item) => {
@@ -239,7 +212,7 @@ router.post("/fulfillment", async (req, res) => {
         { _id: userId },
         {
           $push: {
-            orders: { items: user.cart },
+            orders: { items: user.cart, deliveryAddress: user.residence },
           },
         },
         (err, success) => {
@@ -270,7 +243,6 @@ router.post("/fulfillment", async (req, res) => {
   //intent czyszczacy koszyk
   intentMap.set("clearCart - yes", async (agent) => {
     const userId = req.body.session.split("bot-session")[1];
-    console.log("zaraz usune basket iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     let wasCartCleared = await clearCart(userId);
     if (!wasCartCleared) {
       agent.add("Something went wrong");
@@ -278,6 +250,15 @@ router.post("/fulfillment", async (req, res) => {
       agent.add(req.body.queryResult.fulfillmentText);
     }
   });
+
+  //intent pytajacy o potwierdzenie nowego adresu dostawy
+  intentMap.set(
+    "createOrder.confirmCart.confirmAddress.enterNewAddress",
+    async (agent) => {
+      console.log(req.body);
+      agent.add(req.body.queryResult.fulfillmentText);
+    }
+  );
 
   agent.handleRequest(intentMap);
 });

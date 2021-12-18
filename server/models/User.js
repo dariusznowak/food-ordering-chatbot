@@ -30,6 +30,7 @@ const CartItem = new mongoose.Schema({
 const Order = new mongoose.Schema(
   {
     items: [CartItem],
+    deliveryAddress: { type: String },
   },
   {
     timestamps: true,

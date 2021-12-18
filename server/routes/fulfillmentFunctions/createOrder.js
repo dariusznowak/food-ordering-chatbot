@@ -6,32 +6,12 @@ async function createOrder(data) {
   const itemNumber = data.queryResult.parameters.itemNumber;
   let resultMessage;
   let cartItemToDeleteId;
-  let cartItemsData = await User.find({ _id: userId });
-
-  if (cartItemsData[0].cart.length === 0) {
-    resultMessage = "Couldn't delete anything. Basket is empty!";
-    return resultMessage;
-  } else if (itemNumber > cartItemsData[0].length || itemNumber < 0) {
-    resultMessage = "Wrong item number! Please choose correct one from cart.";
-    return resultMessage;
-  }
-
-  cartItems = cartItemsData[0].cart.map((item, index) => {
-    if (index + 1 == itemNumber) {
-      cartItemToDeleteId = item.itemId;
-      itemName = item.itemName;
-    }
-  });
-
-  // await User.updateOne(
-  //   { _id: userId, "cart.itemId": cartItemToDeleteId },
-  //   {
-  //     $pull: { "cart.itemId": cartItemToDeleteId },
-  //   }
-  // );
-
-  await User.updateOne(
-    //znowu problematycznie z baza - tak sie usuwa z bazy!
+  let cardodwywalenia
+  fsalfjsalfjsalfkjsalkfj
+  
+  
+  //wkleic tu kod z fulfillmentRoutes.js!!!!!!!!!!!!!!!!!!!!!!!!
+  bazy!
     { _id: userId },
     { $pull: { cart: { itemId: cartItemToDeleteId } } },
     // { safe: true, multi: true },

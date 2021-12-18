@@ -2,6 +2,8 @@
 /build
 /client/node_modules
 
+/nanoid
+
 mongodb.js
 
 .DS_Store

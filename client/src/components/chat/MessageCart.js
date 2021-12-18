@@ -1,5 +1,6 @@
 import React from "react";
 import "./MessageCart.css";
+import { nanoid } from "nanoid";
 
 function MessageCart(props) {
   const cartItems =
@@ -12,7 +13,7 @@ function MessageCart(props) {
       <div className="messageCart__itemsBoxBody">
         {cartItems.map((item, index) => {
           return (
-            <div className="messageCart__itemsBox">
+            <div className="messageCart__itemsBox" key={nanoid()}>
               <div className="messageCart__itemName">
                 {index + 1}. {item.structValue.fields.itemName.stringValue}
               </div>

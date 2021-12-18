@@ -9,18 +9,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { UserContext } from "../loginAndRegister/UserContext";
 
+import { nanoid } from "nanoid";
+
 function MessageRestaurantItems(props) {
   // console.log(props.data);
 
   const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
     useContext(UserContext);
-
-  // const addItemToCart = (itemName) => {
-  //   //na razie nie rozwijam dalej
-  //   //bo nie wiem czy wgl taki przycisk dawac
-  //   console.log("Dodanie do karty " + itemName);
-  //   console.log(userInfo);
-  // };
 
   return (
     <div className="itemCard__body">
@@ -28,7 +23,7 @@ function MessageRestaurantItems(props) {
         // console.log(item);
         return (
           // <Card sx={{ maxWidth: 325 }}>
-          <div className="itemCard__singleCard">
+          <div className="itemCard__singleCard" key={nanoid()}>
             <div className="itemCard__itemName">
               {"#"}
               {index + 1} {item.structValue.fields.itemName.stringValue}{" "}

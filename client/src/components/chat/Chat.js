@@ -15,8 +15,10 @@ import { withRouter } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 
 import { UserContext } from "../loginAndRegister/UserContext";
-
 import { getEventToTrigger } from "./getEventToTrigger";
+
+//nanoid uzywa sie do generowania unikalnych key dla komponentow
+import { nanoid } from "nanoid";
 
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
@@ -104,7 +106,7 @@ function Chat() {
       // console.log(response.data.fulfillmentMessages);
       let eventToTrigger;
 
-      response.data.fulfillmentMessages.map((element) => {
+      response.data.fulfillmentMessages.forEach((element) => {
         if (element.hasOwnProperty("payload")) {
           //TODO - trzeba stworzyc na froncie specjalny typ wiadomosci wyswitlajacy karuzele ze zdjeciami
           receivedMessages.push({
@@ -253,7 +255,8 @@ function Chat() {
                 ) {
                   return (
                     <MessageFoodCategories
-                      key={index}
+                      key={nanoid()}
+                      // key={index}
                       // categoryName="Indian"
                       // imgUrl=""
                       // imgAlt=""
@@ -266,7 +269,7 @@ function Chat() {
                 ) {
                   return (
                     <MessageRestaurants
-                      key={index}
+                      key={nanoid()}
                       data={message.payload.fields.restaurants.listValue.values}
                     />
                   );
@@ -276,7 +279,7 @@ function Chat() {
                 ) {
                   return (
                     <MessageRestaurantItems
-                      key={index}
+                      key={nanoid()}
                       data={message.payload.fields.menuItems.listValue.values}
                     />
                   );
@@ -285,13 +288,13 @@ function Chat() {
                   "cart_items_list"
                 ) {
                   return (
-                    <MessageCart key={index} data={message.payload.fields} />
+                    <MessageCart key={nanoid()} data={message.payload.fields} />
                   );
                 }
               }
               return (
                 <MessageStandard
-                  key={index}
+                  key={nanoid()}
                   who={message.who}
                   content={message.content.text.text}
                 />

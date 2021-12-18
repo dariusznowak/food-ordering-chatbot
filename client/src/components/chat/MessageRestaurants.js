@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { nanoid } from "nanoid";
 
 function MessageRestaurants(props) {
   // console.log(props.data);
@@ -15,7 +16,7 @@ function MessageRestaurants(props) {
     <div className="messageRestaurants__body">
       {props.data.map((restaurant) => {
         return (
-          <Card sx={{ width: 250, marginTop: 2 }}>
+          <Card sx={{ width: 250, marginTop: 2 }} key={nanoid()}>
             <CardMedia
               component="img"
               height="140"

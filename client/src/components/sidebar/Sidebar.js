@@ -3,7 +3,6 @@ import "./Sidebar.css";
 // import { BsChatDotsFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 /*react router; Link pozwala na przejscie do innego miejsca bez requesta do servera*/
@@ -54,12 +53,12 @@ function Sidebar() {
               <p> ASSISTANT</p>
             </div>
           </Link>
-          <Link to="/usersettings" className="sidebar__link">
+          {/* <Link to="/usersettings" className="sidebar__link">
             <div className="sidebar__singleOption">
               <SettingsIcon />
               <p> User settings</p>
             </div>
-          </Link>
+          </Link> */}
 
           <Link to="/feedback" className="sidebar__link">
             <div className="sidebar__singleOption">

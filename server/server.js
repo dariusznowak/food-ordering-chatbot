@@ -9,6 +9,7 @@ const registerRoute = require("./routes/register.js");
 const loginRoute = require("./routes/login.js");
 const userAuth = require("./routes/userAuth.js");
 const fulfillmentRoutes = require("./routes/fulfillmentRoutes.js");
+const feedbackRoute = require("./routes/feedback.js");
 
 // app config
 const app = express();
@@ -46,6 +47,7 @@ app.use(registerRoute);
 app.use(loginRoute);
 app.use(userAuth);
 app.use(fulfillmentRoutes);
+app.use(feedbackRoute);
 
 // listen
 app.listen(port, () => console.log(`Server running at localhost: ${port}`));

@@ -15,8 +15,6 @@ router.get("/user", (req, res) => {
   try {
     const payload = jwt.verify(req.cookies.token, secret);
     User.findById(payload.id).then((userInfo) => {
-      //   console.log("userInf = " + userInfo);
-      // res.json(userInfo);
       res.json({
         id: userInfo._id,
         fullName: userInfo.fullName,
@@ -25,13 +23,12 @@ router.get("/user", (req, res) => {
         phoneNumber: userInfo.phoneNumber,
         isAuth: true,
       });
-      //nastepnie w App.js dalej dzialamy
-      console.log("you are logged in");
+      // console.log("you are logged in");
     });
   } catch (e) {
-    console.log(
-      "You are probably not logged in. Mozliwe że obsluga tego bledu jest niekompletna!!!"
-    );
+    // console.log(
+    //   "You are probably not logged in."
+    // );
     res.json({ isAuth: false });
   }
 });

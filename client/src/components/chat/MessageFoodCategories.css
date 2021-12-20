@@ -5,9 +5,16 @@
   width: fit-content;
 
   display: flex;
+  flex-wrap: wrap;
 
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
   background-color: rgb(255, 255, 255);
+}
+
+@media only screen and (max-width: 1200px) {
+  .messageFoodCategories__body {
+    width: 560px;
+  }
 }
 
 .messageFoodCategories__body img {
@@ -22,4 +29,9 @@
   margin-right: 15px;
   margin-left: 15px;
   text-align: center;
+}
+
+.messageFoodCategories__name {
+  font-size: 1.6em;
+  font-weight: 500;
 }

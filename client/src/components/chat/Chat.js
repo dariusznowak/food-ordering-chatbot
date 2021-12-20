@@ -3,7 +3,9 @@ import { useEffect, useState, useContext } from "react";
 import "./Chat.css";
 import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
+import MessageRestaurantItems from "./MessageRestaurantItems";
 import MessageRestaurants from "./MessageRestaurants";
+import MessageCart from "./MessageCart";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";
 import Axios from "../../axios";
@@ -12,6 +14,11 @@ import { withRouter } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
 
 import { UserContext } from "../loginAndRegister/UserContext";
+import { getEventToTrigger } from "./getEventToTrigger";
+
+//nanoid uzywa sie do generowania unikalnych key dla komponentow
+import { nanoid } from "nanoid";
+import MessageOrderList from "./MessageOrderList";
 
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
@@ -21,6 +28,9 @@ function Chat() {
     const localStorageData = localStorage.getItem("conversations");
     return localStorageData ? JSON.parse(localStorageData) : [];
   });
+
+  //tutaj dam sobie stan w ktorym ustawie eventy do strigerowania
+  const [eventToTrigger, setEventToTrigger] = useState("");
 
   const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
     useContext(UserContext);
@@ -34,11 +44,18 @@ function Chat() {
     () => {
       //jezeli localstorage byl pusty to powitaj usera
       if (conversations.length === 0) {
-        console.log("local pusty jest to mowi useEffect()");
+        //local storage jest pusty
         eventQuery("welcomeToMyWebsite");
       }
     } /*, []*/
   );
+
+  function handleEventToTrigger() {
+    if (eventToTrigger !== "") {
+      eventQuery(eventToTrigger);
+      setEventToTrigger("");
+    }
+  }
 
   // const [toDoTable, setToDoTask] = useState(() => {
   //   const localStorageData = localStorage.getItem("toDoTable");
@@ -83,11 +100,13 @@ function Chat() {
         textQueryVariables
       ); //potem server wysyla res
       // requesta ustawiamy tak jak body zwracane z api dialogflow'a !!!
-      const content = response.data.fulfillmentMessages[0];
+      // const content = response.data.fulfillmentMessages[0];
 
       let receivedMessages = [];
       // console.log(response.data.fulfillmentMessages);
-      response.data.fulfillmentMessages.map((element) => {
+      let eventToTrigger;
+
+      response.data.fulfillmentMessages.forEach((element) => {
         if (element.hasOwnProperty("payload")) {
           //TODO - trzeba stworzyc na froncie specjalny typ wiadomosci wyswitlajacy karuzele ze zdjeciami
           receivedMessages.push({
@@ -100,6 +119,12 @@ function Chat() {
             },
             payload: element.payload,
           });
+
+          //tutaj mozna by wywolac funkcje ktora jesli trzeba - to wywola event,
+          //np. po wyswietleniu restauracji z kategorii "pizza" - wywola sie event,
+          //ktory odpali nam odpowiedniego intenta - tutaj bylby to intent, ktory
+          //pobieralby ktora pizza restauracje wybieram...
+          eventToTrigger = getEventToTrigger(element);
         } else {
           receivedMessages.push({
             who: "bot",
@@ -124,6 +149,11 @@ function Chat() {
       // setConversations([]); //mozna tak na szybko oproznic localstorage
       // setConversations([conversation, userMessage, ...conversations]);
       setConversations([...receivedMessages, userMessage, ...conversations]);
+
+      if (eventToTrigger) {
+        // console.log(eventToTrigger);
+        setEventToTrigger(eventToTrigger);
+      }
 
       // console.log(conversation);
     } catch (error) {
@@ -154,8 +184,8 @@ function Chat() {
 
       const content = response.data.fulfillmentMessages[0];
 
-      console.log("eventQuery siemka");
-      console.log(response.data.fulfillmentMessages);
+      // console.log("eventQuery siemka");
+      // console.log(response.data.fulfillmentMessages);
 
       let conversation = {
         who: "bot",
@@ -225,7 +255,8 @@ function Chat() {
                 ) {
                   return (
                     <MessageFoodCategories
-                      key={index}
+                      key={nanoid()}
+                      // key={index}
                       // categoryName="Indian"
                       // imgUrl=""
                       // imgAlt=""
@@ -238,21 +269,54 @@ function Chat() {
                 ) {
                   return (
                     <MessageRestaurants
-                      key={index}
+                      key={nanoid()}
                       data={message.payload.fields.restaurants.listValue.values}
+                    />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "menu_items_list"
+                ) {
+                  return (
+                    <MessageRestaurantItems
+                      key={nanoid()}
+                      data={message.payload.fields.menuItems.listValue.values}
+                    />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "cart_items_list"
+                ) {
+                  return (
+                    <MessageCart key={nanoid()} data={message.payload.fields} />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "order_list"
+                ) {
+                  return (
+                    <MessageOrderList
+                      key={nanoid()}
+                      data={message.payload.fields}
                     />
                   );
                 }
               }
-
               return (
                 <MessageStandard
-                  key={index}
+                  key={nanoid()}
                   who={message.who}
                   content={message.content.text.text}
                 />
               );
             })}
+            {
+              //to miejsce to HIT - pół dnia nad tym myślałem;
+              //teraz tutaj sie wywoluje funkcja ktora wywoluje EVENT w dialogflow,
+              //np. po wybraniu kategorii "pizza" -> odpala sie event ktory wlacza intent
+              //odpowiedzialny za
+              eventToTrigger !== "" ? handleEventToTrigger() : true
+            }
           </div>
           <div className="chat__footer">
             <form>

@@ -12,7 +12,6 @@ import Register from "./loginAndRegister/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./chat/Chat";
 import Feedback from "./feedback/Feedback";
-import UserSettings from "./userSettings/UserSettings";
 import axios from "../axios";
 
 import { UserContext } from "./loginAndRegister/UserContext";
@@ -31,7 +30,7 @@ function App() {
       .get("/user", { withCredentials: true })
       .then((res) => {
         setUserInfo(res.data);
-        console.log(res.data);
+        // console.log(res.data);
         // setIsAuth(true);
       })
       .catch(() => {
@@ -48,12 +47,12 @@ function App() {
         <Route exact path="/login" component={Login} />
 
         <ProtectedRoute exact path="/" component={Chat} />
-        <ProtectedRoute
+        {/* <ProtectedRoute
           exact
           path="/usersettings"
           component={UserSettings}
           // isAuth={isAuth}
-        />
+        /> */}
         <ProtectedRoute
           exact
           path="/feedback"

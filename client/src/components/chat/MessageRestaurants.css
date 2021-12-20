@@ -5,10 +5,24 @@
   width: fit-content;
 
   display: flex;
+  flex-wrap: wrap;
 
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
   background-color: rgb(255, 255, 255);
 }
+
+@media only screen and (max-width: 1200px) {
+  .messageRestaurants__body {
+    width: 560px;
+  }
+}
+
+/* @media only screen and (max-width: 1026px) 
+{
+  .messageRestaurants__body {
+    width: 504px;
+  }
+} */
 
 .messageRestaurants__body div {
   margin-right: 15px;

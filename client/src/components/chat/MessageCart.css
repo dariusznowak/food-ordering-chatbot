@@ -1,0 +1,59 @@
+.messageCart__body {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 9px;
+  width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+  background-color: rgb(255, 255, 255);
+}
+
+.messageCart__itemsBoxBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageCart__itemsBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.messageCart__itemName {
+  margin-right: 50px;
+}
+
+.messageCart__priceAndQuantity {
+  display: flex;
+}
+
+.messageCart__price {
+  margin-left: 10px;
+}
+
+.messageCart__quantity {
+}
+
+.messageCart__totalCost {
+  display: flex;
+  justify-content: space-between;
+  border-top: solid 1px black;
+  margin-top: 5px;
+  padding-top: 2px;
+}
+
+/* .messageFoodCategories__body img {
+  height: 250px;
+  width: 250px;
+  object-fit: cover;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+.messageFoodCategories__body div {
+  margin-right: 15px;
+  margin-left: 15px;
+  text-align: center;
+} */

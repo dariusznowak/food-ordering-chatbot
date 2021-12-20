@@ -11,9 +11,6 @@ import Button from "@mui/material/Button";
 import { Avatar } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
-import { Input } from "@mui/material";
-
-// function Register() {
 function Register() {
   // const [email, setEmail] = useState("");
   // const [fullName, setFullName] = useState("");

@@ -25,7 +25,6 @@ router.post("/register", (req, res) => {
   });
 
   user.save().then((userInfo) => {
-    // console.log(userInfo);
     //zalogujemy uzytkownika po rejestracji
     //wyslemy mu w ciasteczku token
     jwt.sign(

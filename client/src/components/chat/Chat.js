@@ -5,7 +5,6 @@ import MessageStandard from "./MessageStandard";
 import MessageFoodCategories from "./MessageFoodCategories";
 import MessageRestaurantItems from "./MessageRestaurantItems";
 import MessageRestaurants from "./MessageRestaurants";
-import MessageCreateOrderItems from "./MessageCreateOrderItems";
 import MessageCart from "./MessageCart";
 import SendIcon from "@mui/icons-material/Send";
 import { IconButton } from "@mui/material";

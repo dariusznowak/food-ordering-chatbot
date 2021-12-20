@@ -3,7 +3,6 @@ import "./Sidebar.css";
 // import { BsChatDotsFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 /*react router; Link pozwala na przejscie do innego miejsca bez requesta do servera*/

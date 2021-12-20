@@ -12,7 +12,6 @@ import Register from "./loginAndRegister/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./chat/Chat";
 import Feedback from "./feedback/Feedback";
-import UserSettings from "./userSettings/UserSettings";
 import axios from "../axios";
 
 import { UserContext } from "./loginAndRegister/UserContext";

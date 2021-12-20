@@ -1,21 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
+// import { useContext } from "react";
 import "./MessageRestaurantItems.css";
-
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { UserContext } from "../loginAndRegister/UserContext";
 
 import { nanoid } from "nanoid";
 
 function MessageRestaurantItems(props) {
   // console.log(props.data);
 
-  const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
-    useContext(UserContext);
+  // const { /*isAuth, setIsAuth, login, setLogin,*/ userInfo } =
+  //   useContext(UserContext);
 
   return (
     <div className="itemCard__body">

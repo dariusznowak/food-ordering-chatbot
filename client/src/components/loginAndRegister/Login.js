@@ -1,7 +1,6 @@
 import React from "react";
 import "./Register.css";
 import { useState, useContext, useEffect } from "react";
-// import axios from "axios";
 import axios from "../../axios.js";
 import { UserContext } from "./UserContext";
 import { Link, useHistory } from "react-router-dom";

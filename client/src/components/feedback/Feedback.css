@@ -1,7 +1,55 @@
-.feedback {
+.feedback__body {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   flex: 0.8;
+  place-items: center;
   background: rgba(255, 255, 255, 0.63);
   border-radius: 0 10px 10px 0;
+}
+
+.feedback__formBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+  border: solid 2px rgb(214, 214, 214);
+  border-radius: 15px;
+  display: flex;
+  width: 600px;
+  height: 480px;
+}
+
+.feedback__header {
+  /* text-align: center; */
+  font-weight: 600;
+  font-size: 2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.feedback__input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 65%;
+  background: rgb(201, 201, 201);
+}
+
+.feedback__input textarea {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  width: 100%;
+  line-height: 1.4;
+  letter-spacing: 0em;
+  padding: 10px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  resize: none;
+}
+
+.feedback__button {
+  display: flex;
+  margin-bottom: 20px;
 }

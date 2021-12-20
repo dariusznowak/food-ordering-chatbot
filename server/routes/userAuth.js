@@ -20,7 +20,6 @@ router.get("/user", (req, res) => {
         fullName: userInfo.fullName,
         login: userInfo.login,
         residence: userInfo.residence,
-        phoneNumber: userInfo.phoneNumber,
         isAuth: true,
       });
       // console.log("you are logged in");

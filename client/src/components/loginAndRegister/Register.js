@@ -18,7 +18,6 @@ function Register() {
   const [inputPassword, setInputPassword] = useState("");
   const [inputFullName, setInputFullName] = useState("");
   const [inputResidence, setInputResidence] = useState("");
-  const [inputPhoneNumber, setInputPhoneNumber] = useState("");
   const [registerError, setRegisterError] = useState(false);
 
   const { isAuth, /*setIsAuth, userInfo, */ setUserInfo } =
@@ -37,7 +36,6 @@ function Register() {
       fullName: inputFullName,
       login: inputLogin,
       residence: inputResidence,
-      phoneNumber: inputPhoneNumber,
       password: inputPassword,
     };
     // console.log(data);
@@ -52,7 +50,6 @@ function Register() {
         setInputPassword("");
         setInputFullName("");
         setInputResidence("");
-        setInputPhoneNumber("");
         // setIsAuth(true);
         localStorage.setItem("isAuth", JSON.stringify(true));
         console.log("powinno byc true: " + isAuth);
@@ -117,16 +114,7 @@ function Register() {
               value={inputResidence}
               onChange={(e) => setInputResidence(e.target.value)}
             />
-            <TextField
-              type="number"
-              className="register_login__single"
-              label="Phone number"
-              variant="standard"
-              placeholder="Enter your phone number"
-              required
-              value={inputPhoneNumber}
-              onChange={(e) => setInputPhoneNumber(e.target.value)}
-            />
+
             <TextField
               inputProps={{
                 maxLength: "20",

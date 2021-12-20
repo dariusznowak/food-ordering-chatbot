@@ -12,7 +12,7 @@ const secret = "secret123";
 
 router.post("/register", (req, res) => {
   // const { login, email, fullName, password } = req.body;
-  const { fullName, login, residence, phoneNumber, password } = req.body;
+  const { fullName, login, residence, password } = req.body;
   //enkrypcja hasła, 10-ile razy bedzie kodowane
   const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -20,9 +20,11 @@ router.post("/register", (req, res) => {
     fullName,
     login,
     residence,
-    phoneNumber,
     password: hashedPassword,
   });
+
+  console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+  console.log(user);
 
   user.save().then((userInfo) => {
     //zalogujemy uzytkownika po rejestracji

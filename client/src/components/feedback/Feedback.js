@@ -10,7 +10,7 @@ import Sidebar from "../sidebar/Sidebar";
 function Feedback() {
   const [feedbackInput, setFeedbackInput] = useState("");
 
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
   const sendFeedback = async (e) => {
     const data = { login: userInfo.login, feedbackInput };

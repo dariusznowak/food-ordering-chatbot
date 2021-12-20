@@ -39,7 +39,6 @@ async function addItemToCart(data) {
     const user = await User.find({ _id: userId });
     let result = false;
 
-    //console.log(user[0].cart);
     user[0].cart.map((cartItem) => {
       if (cartItem.itemId == itemId) {
         result = true;

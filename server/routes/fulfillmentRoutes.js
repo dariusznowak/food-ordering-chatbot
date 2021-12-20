@@ -22,6 +22,7 @@ const getCartItems = require("./fulfillmentFunctions/getCartItems.js");
 const changeQuantityOfItem = require("./fulfillmentFunctions/changeQuantityOfItem");
 const deleteItem = require("./fulfillmentFunctions/deleteItem");
 const clearCart = require("./fulfillmentFunctions/clearCart");
+const getOrders = require("./fulfillmentFunctions/getOrders");
 
 // const secret = "secret123";
 
@@ -58,7 +59,6 @@ router.post("/fulfillment", async (req, res) => {
 
   intentMap.set("orderFood.chooseCategory", async (agent) => {
     agent.add(req.body.queryResult.fulfillmentText);
-    //console.log(req.body.queryResult.parameters.foodcategory);
     const payload = await getRestaurantFromCategory(
       req.body.queryResult.parameters.foodcategory
     );
@@ -186,7 +186,6 @@ router.post("/fulfillment", async (req, res) => {
   intentMap.set("createOrder.confirmCart - yes", async (agent) => {
     const userId = req.body.session.split("bot-session")[1];
     const user = await User.findOne({ _id: userId });
-    console.log("Your current delivery address: " + user.residence);
     agent.add(
       "Delivery address: " +
         user.residence +
@@ -224,7 +223,7 @@ router.post("/fulfillment", async (req, res) => {
               req.body.queryResult.fulfillmentText +
                 " " +
                 totalCost +
-                " $ has been placed"
+                " zł has been placed"
             );
           }
         }
@@ -251,20 +250,69 @@ router.post("/fulfillment", async (req, res) => {
     }
   });
 
-  //intent pytajacy o potwierdzenie nowego adresu dostawy
+  //intent dodajacy zamowienie z nowym adresem dostawy
   intentMap.set(
-    "createOrder.confirmCart.confirmAddress.enterNewAddress",
+    "createOrder.confirmCart.confirmAddress.enterNewAddress - yes",
     async (agent) => {
-      console.log(req.body);
-      agent.add(req.body.queryResult.fulfillmentText);
+      let deliveryAddress =
+        req.body.queryResult.parameters.deliveryAddress["street-address"];
+      const userId = req.body.session.split("bot-session")[1];
+      const user = await User.findOne({ _id: userId });
+      let error = false;
+      let totalCost = 0;
+      user.cart.forEach((item) => {
+        totalCost += item.price;
+      });
+
+      User.updateOne(
+        { _id: userId },
+        {
+          $push: {
+            orders: { items: user.cart, deliveryAddress: deliveryAddress },
+          },
+        },
+        (err, success) => {
+          if (err) {
+            agent.add("Something went wrong");
+            error = true;
+          } else {
+            agent.add(
+              req.body.queryResult.fulfillmentText +
+                " " +
+                totalCost +
+                " zł has been placed"
+            );
+          }
+        }
+      );
+
+      //po dodaniu orderu nalezy wyczyscic koszyk
+      if (!error) {
+        let wasCartCleared = await clearCart(userId);
+        if (!wasCartCleared) {
+          agent.add("Something went wrong");
+        }
+      }
     }
   );
 
-  agent.handleRequest(intentMap);
+  //intent do wyswietlania orderow
+  intentMap.set("showOrders", async (agent) => {
+    const payload = await getOrders(req.body);
+    if (payload == false) {
+      agent.add("You don't have any past orders");
+    } else {
+      agent.add(req.body.queryResult.fulfillmentText);
+      agent.add(
+        new Payload(agent.UNSPECIFIED, payload, {
+          rawPayload: true,
+          sendAsMessage: true,
+        })
+      );
+    }
+  });
 
-  console.log(
-    "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-  );
+  agent.handleRequest(intentMap);
 });
 
 module.exports = router;

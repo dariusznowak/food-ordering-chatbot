@@ -12,9 +12,6 @@ async function changeQuantityOfItem(data) {
   let itemName;
   let resultMessage;
 
-  //   console.log("newQuantity ============================== " + newQuantity);
-  //   console.log("itemNumber ============================== " + itemNumber);
-
   if (cartItemsData[0].cart.length === 0) {
     resultMessage = "You can't change anything in empty basket!";
     return resultMessage;

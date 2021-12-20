@@ -19,6 +19,7 @@ import { getEventToTrigger } from "./getEventToTrigger";
 
 //nanoid uzywa sie do generowania unikalnych key dla komponentow
 import { nanoid } from "nanoid";
+import MessageOrderList from "./MessageOrderList";
 
 //important!!! wiadomosci musza byc dodawane na poczatek, bo wyswietlane sa od tylu
 
@@ -44,7 +45,7 @@ function Chat() {
     () => {
       //jezeli localstorage byl pusty to powitaj usera
       if (conversations.length === 0) {
-        console.log("local pusty jest to mowi useEffect()");
+        //local storage jest pusty
         eventQuery("welcomeToMyWebsite");
       }
     } /*, []*/
@@ -289,6 +290,16 @@ function Chat() {
                 ) {
                   return (
                     <MessageCart key={nanoid()} data={message.payload.fields} />
+                  );
+                } else if (
+                  message.payload.fields.messageType.stringValue ===
+                  "order_list"
+                ) {
+                  return (
+                    <MessageOrderList
+                      key={nanoid()}
+                      data={message.payload.fields}
+                    />
                   );
                 }
               }

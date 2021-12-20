@@ -23,9 +23,6 @@ router.post("/textQuery", async (req, res) => {
   //We need to send some information that comes from the client to Dialogflow API
   // The text query request.
 
-  // console.log("sessionPath: {} " + sessionPath);
-  console.log();
-
   // The text query request.
   const request = {
     session: sessionPath,
@@ -53,7 +50,6 @@ router.post("/textQuery", async (req, res) => {
   }
   //wysylanie responsa do frontendu
   res.send(result);
-  //console.log(result);
 });
 
 router.post("/eventQuery", async (req, res) => {

@@ -271,7 +271,7 @@ router.post("/fulfillment", async (req, res) => {
             orders: { items: user.cart, deliveryAddress: deliveryAddress },
           },
         },
-        (err, success) => {
+        (err) => {
           if (err) {
             agent.add("Something went wrong");
             error = true;

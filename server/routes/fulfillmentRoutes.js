@@ -1,7 +1,7 @@
 //fulfillmentRoutes.js backup
 
 const express = require("express");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const { WebhookClient } = require("dialogflow-fulfillment");
 
 // const cookieParser = require("cookie-parser");
@@ -200,12 +200,16 @@ router.post("/fulfillment", async (req, res) => {
     async (agent) => {
       const userId = req.body.session.split("bot-session")[1];
       const user = await User.findOne({ _id: userId });
-      console.log(user);
       let error = false;
       let totalCost = 0;
-      user.cart.map((item) => {
+      user.cart.forEach((item) => {
         totalCost += item.price;
       });
+
+      console.log(totalCost);
+      console.log(
+        "totalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCost"
+      );
 
       User.updateOne(
         { _id: userId },
@@ -214,7 +218,7 @@ router.post("/fulfillment", async (req, res) => {
             orders: { items: user.cart, deliveryAddress: user.residence },
           },
         },
-        (err, success) => {
+        (err) => {
           if (err) {
             agent.add("Something went wrong");
             error = true;

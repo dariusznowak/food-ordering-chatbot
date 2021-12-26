@@ -38,7 +38,7 @@ function Sidebar() {
       <div className="sidebar__userInfoBox">
         <h3>User logged in</h3>
         <div className="sidebar_userInfo">
-          <Avatar src="https://media-exp1.licdn.com/dms/image/C4E03AQGQFQ_AGFxzgw/profile-displayphoto-shrink_400_400/0/1634675705304?e=1642032000&v=beta&t=M07g0BbowFzd3xE-C4g7meQ6PUJax7GZQY0JKLjS1_c" />
+          <Avatar />
           <div className="sidebar_userInfoText">
             <p>{userInfo.fullName}</p>
             <p>({userInfo.login})</p>

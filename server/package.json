@@ -12,18 +12,15 @@
   "dependencies": {
     "actions-on-google": "^2.14.0",
     "bcrypt": "^5.0.1",
-    "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dialogflow": "^0.8.2",
     "dialogflow-fulfillment": "^0.6.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.4.20",
-    "uuid": "^8.3.2"
+    "mongoose": "^5.4.20"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
     "nodemon": "^1.19.4"
   }
 }

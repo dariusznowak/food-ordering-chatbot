@@ -1,19 +1,7 @@
-//fulfillmentRoutes.js backup
-
 const express = require("express");
-// const mongoose = require("mongoose");
-const { WebhookClient } = require("dialogflow-fulfillment");
-
-// const cookieParser = require("cookie-parser");
-
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const { WebhookClient, Payload } = require("dialogflow-fulfillment");
 const router = express.Router();
 const User = require("../models/User");
-// const Food = require("../models/Food");
-
-const { Payload } = require("dialogflow-fulfillment");
-
 const getFoodCategories = require("./fulfillmentFunctions/getFoodCategories.js");
 const getRestaurantFromCategory = require("./fulfillmentFunctions/getRestaurantFromCategory.js");
 const getItemsFromRestaurant = require("./fulfillmentFunctions/getItemsFromRestaurant.js");
@@ -24,13 +12,11 @@ const deleteItem = require("./fulfillmentFunctions/deleteItem");
 const clearCart = require("./fulfillmentFunctions/clearCart");
 const getOrders = require("./fulfillmentFunctions/getOrders");
 
-// const secret = "secret123";
-
 router.post("/fulfillment", async (req, res) => {
   let detectedIntent = req.body.queryResult.intent.displayName;
   const agent = new WebhookClient({ request: req, response: res });
 
-  let intentMap = new Map(); //to intents map we have intents with fulfillment enabled
+  let intentMap = new Map();
 
   intentMap.set("Default Fallback Intent", async (agent) => {
     agent.add("I didn't understand");
@@ -45,7 +31,6 @@ router.post("/fulfillment", async (req, res) => {
     agent.add(`Hello ${fullName}! How can I help you?`);
   });
 
-  //tworzenie payload'a z kategoriami jedzenia
   intentMap.set("orderFood", async (agent) => {
     await agent.add(req.body.queryResult.fulfillmentText);
     const payload = await getFoodCategories();
@@ -105,7 +90,6 @@ router.post("/fulfillment", async (req, res) => {
     });
   }
 
-  //intenty do dodawania wybranego itemu do koszyka
   if (
     detectedIntent === "chooseKebabRestaurant.addItemToCart - yes" ||
     detectedIntent === "choosePizzaRestaurant.addItemToCart - yes" ||
@@ -116,7 +100,6 @@ router.post("/fulfillment", async (req, res) => {
       if (addToCartResult !== "") {
         agent.add('"' + addToCartResult + '" item added to cart');
         const payload = await getItemsFromRestaurant(
-          //znowu to samo co wyzej, podajemy nazwe restauracji
           req.body.queryResult.parameters.restaurantName
         );
         agent.add(
@@ -205,11 +188,6 @@ router.post("/fulfillment", async (req, res) => {
       user.cart.forEach((item) => {
         totalCost += item.price;
       });
-
-      console.log(totalCost);
-      console.log(
-        "totalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCosttotalCost"
-      );
 
       User.updateOne(
         { _id: userId },

@@ -1,32 +1,21 @@
 import React, { useContext } from "react";
 import "./Sidebar.css";
-// import { BsChatDotsFill } from "react-icons/bs";
 import { Avatar } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-/*react router; Link pozwala na przejscie do innego miejsca bez requesta do servera*/
 import { Link } from "react-router-dom";
 import axios from "../../axios";
-
 import { UserContext } from "../loginAndRegister/UserContext";
 
 function Sidebar() {
-  const { /*isAuth, */ setIsAuth, /*login, setLogin,*/ userInfo } =
-    useContext(UserContext);
+  const { setIsAuth, userInfo } = useContext(UserContext);
 
   const logout = () => {
-    axios
-      .post("/logout", {}, { withCredentials: true })
-      //usuwamy sobie z contextu nasz login - ta funkcjonalnosc moze byc tymczasowa!!!
-      .then(() => {
-        //setLogin("");
-        setIsAuth(false);
-        localStorage.setItem("isAuth", JSON.stringify(false));
-      });
-    //nastepnie usuwamy ciasteczko w endpoincie w api
-
-    //ponadto czyscimy localstorage z zapisanych wiadomosci
+    axios.post("/logout", {}, { withCredentials: true }).then(() => {
+      setIsAuth(false);
+      localStorage.setItem("isAuth", JSON.stringify(false));
+    });
     localStorage.removeItem("conversations");
   };
 
@@ -53,12 +42,6 @@ function Sidebar() {
               <p> ASSISTANT</p>
             </div>
           </Link>
-          {/* <Link to="/usersettings" className="sidebar__link">
-            <div className="sidebar__singleOption">
-              <SettingsIcon />
-              <p> User settings</p>
-            </div>
-          </Link> */}
 
           <Link to="/feedback" className="sidebar__link">
             <div className="sidebar__singleOption">
@@ -67,7 +50,6 @@ function Sidebar() {
             </div>
           </Link>
         </div>
-        {/* cos tu z linkiem do login nie dziala */}
         <Link to="/login" className="sidebar__link">
           <div className="sidebar__logout" onClick={logout}>
             <LogoutIcon />

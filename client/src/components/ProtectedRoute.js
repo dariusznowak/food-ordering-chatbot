@@ -6,7 +6,7 @@ import { UserContext } from "./loginAndRegister/UserContext";
 
 //Redirect component redirectuje do innej lokacji gdy sie nie uda zalogowac?
 
-function ProtectedRoute({ /*isAuth,*/ component: Component, ...rest }) {
+function ProtectedRoute({ component: Component, ...rest }) {
   const { isAuth, setIsAuth } = useContext(UserContext);
 
   //ten komponent bedzie sprawdzal czy user jest zalogowany i puszczal dalej

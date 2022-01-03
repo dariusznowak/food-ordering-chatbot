@@ -1,19 +1,13 @@
 const express = require("express");
-const mongoose = require("mongoose");
-
-const cookieParser = require("cookie-parser");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../models/User");
 
-const secret = "secret123";
+const secret = "secret1234";
 
 router.post("/register", (req, res) => {
-  // const { login, email, fullName, password } = req.body;
   const { fullName, login, residence, password } = req.body;
-  //enkrypcja hasła, 10-ile razy bedzie kodowane
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   const user = new User({
@@ -23,12 +17,7 @@ router.post("/register", (req, res) => {
     password: hashedPassword,
   });
 
-  console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-  console.log(user);
-
   user.save().then((userInfo) => {
-    //zalogujemy uzytkownika po rejestracji
-    //wyslemy mu w ciasteczku token
     jwt.sign(
       { id: userInfo._id, login: userInfo.login },
       secret,
@@ -39,11 +28,10 @@ router.post("/register", (req, res) => {
         } else {
           res
             .cookie("token", token)
-            .json({ id: userInfo._id, login: userInfo.login });
+            .json({ id: userInfo._id, login: userInfo.login })
+            .sendStatus(200);
         }
       }
-      // },
-      // { expiresIn: "10h" }
     );
   });
 });

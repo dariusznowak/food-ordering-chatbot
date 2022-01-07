@@ -14,8 +14,7 @@ function Login() {
   const [inputPassword, setInputPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
 
-  const { isAuth, setIsAuth, /* login, setLogin, userInfo, */ setUserInfo } =
-    useContext(UserContext);
+  const { isAuth, setIsAuth, setUserInfo } = useContext(UserContext);
 
   useEffect(() => {
     if (isAuth) {
@@ -23,7 +22,6 @@ function Login() {
     }
   });
 
-  //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();
   const goToMainPage = () => {
     history.push("/");
@@ -36,7 +34,6 @@ function Login() {
     axios
       .post("/login", data, { withCredentials: true })
       .then((res) => {
-        // setLogin(res.data.login);
         setUserInfo(res.data);
 
         setInputLogin("");

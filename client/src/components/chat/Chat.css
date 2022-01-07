@@ -8,11 +8,9 @@
 
 .chat__body {
   display: flex;
-  /* flex-direction: column; */
-  flex-direction: column-reverse; /*important!!! dodawanie wiadomosci od tylu*/
+  flex-direction: column-reverse;
   flex: 1;
   padding: 25px;
-  /* overflow-y: scroll; */
   overflow-y: auto;
   margin-top: 10px;
 }
@@ -44,7 +42,3 @@
 .chat__footer > form > input:focus {
   outline: none;
 }
-/* 
-.chat__footer > .MuiSvgIcon-root {
-  padding: 118px;
-} */

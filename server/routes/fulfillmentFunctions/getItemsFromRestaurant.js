@@ -10,12 +10,10 @@ async function getItemsFromRestaurant(restaurantName) {
       menuItems = element.menu;
     }
   });
-  //console.log(menuItems);
 
   const payload = {
     menuItems,
     messageType: "menu_items_list",
-    //categoryName: categoryName,
   };
 
   return payload;

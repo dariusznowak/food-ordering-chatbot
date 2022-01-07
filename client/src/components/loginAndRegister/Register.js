@@ -1,7 +1,6 @@
 import React from "react";
 import "./Register.css";
 import { useState, useContext } from "react";
-// import axios from "axios";
 import axios from "../../axios.js";
 import { UserContext } from "./UserContext";
 import { Link, useHistory } from "react-router-dom";
@@ -12,19 +11,14 @@ import { Avatar } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 
 function Register() {
-  // const [email, setEmail] = useState("");
-  // const [fullName, setFullName] = useState("");
   const [inputLogin, setInputLogin] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputFullName, setInputFullName] = useState("");
   const [inputResidence, setInputResidence] = useState("");
-  const [inputPhoneNumber, setInputPhoneNumber] = useState("");
   const [registerError, setRegisterError] = useState(false);
 
-  const { isAuth, /*setIsAuth, userInfo, */ setUserInfo } =
-    useContext(UserContext);
+  const { isAuth, setUserInfo } = useContext(UserContext);
 
-  //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();
   const goToMainPage = () => {
     history.push("/");
@@ -32,28 +26,21 @@ function Register() {
 
   const registerUser = (e) => {
     e.preventDefault();
-    // const data = { login, email, password, fullName };
     const data = {
       fullName: inputFullName,
       login: inputLogin,
       residence: inputResidence,
-      phoneNumber: inputPhoneNumber,
       password: inputPassword,
     };
-    // console.log(data);
 
-    // //axios robi ajax requesta
     axios
       .post("/register", data, { withCredentials: true })
       .then((res) => {
-        //tutaj linikja ustawiajaca login w context
         setUserInfo(res.data);
         setInputLogin("");
         setInputPassword("");
         setInputFullName("");
         setInputResidence("");
-        setInputPhoneNumber("");
-        // setIsAuth(true);
         localStorage.setItem("isAuth", JSON.stringify(true));
         console.log("powinno byc true: " + isAuth);
         setRegisterError(false);
@@ -117,16 +104,7 @@ function Register() {
               value={inputResidence}
               onChange={(e) => setInputResidence(e.target.value)}
             />
-            <TextField
-              type="number"
-              className="register_login__single"
-              label="Phone number"
-              variant="standard"
-              placeholder="Enter your phone number"
-              required
-              value={inputPhoneNumber}
-              onChange={(e) => setInputPhoneNumber(e.target.value)}
-            />
+
             <TextField
               inputProps={{
                 maxLength: "20",

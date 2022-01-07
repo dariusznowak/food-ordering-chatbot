@@ -1,7 +1,5 @@
-// importing
 const express = require("express");
 const dialogflowRoutes = require("./routes/dialogflow.js");
-// const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -21,7 +19,6 @@ app.use(
   cors({
     credentials: true,
     origin: "http://localhost:3000",
-    // origin: "http://192.168.0.102:3000",
   })
 );
 app.use(cookieParser());

@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 function MessageOrderList(props) {
   let orderList = props.data.orderList.listValue.values;
-
+  let totalPrice = 0;
   let temp = [];
   for (let i = orderList.length - 1; i >= 0; i--) {
     temp.push(orderList[i]);
@@ -37,14 +37,19 @@ function MessageOrderList(props) {
               {orderDate}
             </div>
             <div className="messageOrderList__deliveryAddress">
-              <div>Deliver address:</div>
+              <div>Delivery address:</div>
               {order.structValue.fields.deliveryAddress.stringValue}
             </div>
             <div className="messageOrderList__singleOrderItems">
               <div key={nanoid()}>
                 {itemList.map((item, index) => {
+                  if (index === 0) {
+                    totalPrice = 0;
+                  }
+                  totalPrice += item.structValue.fields.price.numberValue;
+
+                  console.log(totalPrice);
                   return (
-                    //TODO zamienic na komponent bo to jest powtarzanie kodu!!!
                     <div className="messageOrderList__itemsBox" key={nanoid()}>
                       <div className="messageCart__itemName">
                         {index + 1}.{" "}
@@ -69,7 +74,7 @@ function MessageOrderList(props) {
                 style={{ fontWeight: "700" }}
               >
                 <div>TOTAL COST:</div>
-                12 zł
+                {totalPrice} zł
               </div>
             </div>
           </div>

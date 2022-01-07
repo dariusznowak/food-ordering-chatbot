@@ -8,8 +8,6 @@ import Typography from "@mui/material/Typography";
 import { nanoid } from "nanoid";
 
 function MessageRestaurants(props) {
-  // console.log(props.data);
-
   return (
     <div className="messageRestaurants__body">
       {props.data.map((restaurant) => {

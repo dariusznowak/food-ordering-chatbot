@@ -2,7 +2,6 @@ const Food = require("../../models/Food");
 const User = require("../../models/User");
 
 async function addItemToCart(data) {
-  //   const intent = data.queryResult.intent.displayName;
   const itemNumber = data.queryResult.parameters.itemNumber;
   const restaurantName = data.queryResult.parameters.restaurantName;
   const userId = data.session.split("bot-session")[1];
@@ -11,13 +10,12 @@ async function addItemToCart(data) {
     "restaurants.restaurantName": restaurantName,
   });
 
-  //na poczatku szukamy id itemu, ktory chcemy dodac do karty
   let itemId;
   let menuItems;
   let itemName = "";
   let itemDescription;
   let price;
-  restaurantItems = restaurantItems[0].restaurants.map((element, index) => {
+  restaurantItems = restaurantItems[0].restaurants.map((element) => {
     if (element.restaurantName === restaurantName) {
       menuItems = element.menu;
     }
@@ -32,9 +30,6 @@ async function addItemToCart(data) {
     }
   });
 
-  //sprawdzamy jeszcze tylko czy dany item jest juz w koszyku, bo jesli TAK - to
-  //zwiekszamy tylko jego quantity;
-  //jezeli NIE - to dodajemy caly obiekt z quantity=1
   const checkIfItemExistsInCart = async () => {
     const user = await User.find({ _id: userId });
     let result = false;
@@ -49,11 +44,8 @@ async function addItemToCart(data) {
 
   const itemExistsInCart = await checkIfItemExistsInCart();
 
-  //na podstawie id itemu oraz id usera wiemy, ktory item dodac do czyjej karty, robimy to ponizej
   if (!itemExistsInCart) {
     User.updateOne(
-      //WAZNE! Wywalilem "await" bo mi dodawalo 2 razy to samo - nie wiem czemu??????!!!
-      // await User.updateOne(
       { _id: userId },
       {
         $push: {
@@ -67,8 +59,7 @@ async function addItemToCart(data) {
           },
         },
       },
-      //   { upsert: true },
-      function (error, success) {
+      function (error) {
         if (error) {
           console.log(error);
         }

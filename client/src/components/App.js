@@ -1,19 +1,12 @@
 import "./App.css";
-// import Sidebar from "./sidebar/Sidebar";
-// import Chat from "./chat/Chat";
-// import UserSettings from "./userSettings/UserSettings";
-// import Feedback from "./feedback/Feedback";
-/*react router*/
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import Login from "./loginAndRegister/Login";
 import Register from "./loginAndRegister/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import Chat from "./chat/Chat";
 import Feedback from "./feedback/Feedback";
 import axios from "../axios";
-
 import { UserContext } from "./loginAndRegister/UserContext";
 
 function App() {
@@ -25,13 +18,10 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    //mamy nasz token, a dane pobieramy z ciasteczka
     axios
       .get("/user", { withCredentials: true })
       .then((res) => {
         setUserInfo(res.data);
-        // console.log(res.data);
-        // setIsAuth(true);
       })
       .catch(() => {
         axios.post("/logout", {}, { withCredentials: true }).then(() => {
@@ -45,22 +35,8 @@ function App() {
       <Router>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
-
         <ProtectedRoute exact path="/" component={Chat} />
-        {/* <ProtectedRoute
-          exact
-          path="/usersettings"
-          component={UserSettings}
-          // isAuth={isAuth}
-        /> */}
-        <ProtectedRoute
-          exact
-          path="/feedback"
-          component={Feedback}
-          // isAuth={isAuth}
-        />
-        {/* path to ta czesc '...rest', a component to nasz strzezony component */}
-        {/* to ZMIENIC!!!!!! isAuth to powinna byc jakas zmienna globalna z zalogowania czy cos (jakis useContext czy cos) */}
+        <ProtectedRoute exact path="/feedback" component={Feedback} />
       </Router>
     </UserContext.Provider>
   );

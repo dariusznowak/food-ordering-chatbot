@@ -50,7 +50,6 @@ function MessageOrderList(props) {
 
                   console.log(totalPrice);
                   return (
-                    //TODO zamienic na komponent bo to jest powtarzanie kodu!!!
                     <div className="messageOrderList__itemsBox" key={nanoid()}>
                       <div className="messageCart__itemName">
                         {index + 1}.{" "}

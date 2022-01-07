@@ -3,14 +3,12 @@
   margin-bottom: 20px;
   padding: 9px;
   width: fit-content;
-
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
   background-color: rgb(255, 255, 255);
 }
 
 .message__received {
   margin-left: auto;
-  /* background-color: rgb(177, 177, 177); */
   background-color: rgb(82, 247, 41);
   margin-bottom: 50px;
 }

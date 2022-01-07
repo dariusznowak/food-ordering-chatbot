@@ -3,12 +3,9 @@
   font-weight: 400;
   border-radius: 10px;
   margin-bottom: 20px;
-  /* padding: 9px; */
   width: fit-content;
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-evenly; */
-
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
   background-color: rgb(255, 255, 255);
 }
@@ -32,7 +29,6 @@
   padding: 16px;
   margin: 10px;
   width: 200px;
-
   background-color: rgb(199, 199, 199);
   border-radius: 0px;
   box-shadow: 2px 2px 21px -10px rgba(66, 68, 90, 1);
@@ -59,18 +55,3 @@
   margin-top: 10px;
   text-align: center;
 }
-
-/* 
-.itemCard__body div {
-  margin-right: 15px;
-  margin-left: 15px;
-  text-align: center;
-} */
-
-/* .messageRestaurants__body img {
-  height: 250px;
-  width: 250px;
-  object-fit: cover;
-  margin-top: 5px;
-  border-radius: 10px;
-} */

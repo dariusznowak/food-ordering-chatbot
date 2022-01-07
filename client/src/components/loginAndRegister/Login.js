@@ -22,7 +22,6 @@ function Login() {
     }
   });
 
-  //funkcja, ktora przechodzi do ekranu glownego po pomyslnym zalogowaniu
   const history = useHistory();
   const goToMainPage = () => {
     history.push("/");

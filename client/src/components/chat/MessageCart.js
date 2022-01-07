@@ -9,7 +9,6 @@ function MessageCart(props) {
 
   return (
     <div className="messageCart__body">
-      {/* <p>{props.content}</p> */}
       <div className="messageCart__itemsBoxBody">
         {cartItems.map((item, index) => {
           return (
@@ -19,12 +18,10 @@ function MessageCart(props) {
               </div>
               <div className="messageCart__priceAndQuantity">
                 <div className="messageCart__quantity">
-                  {/* QTY: errrorr */}
                   QTY: {item.structValue.fields.quantity.numberValue}
                 </div>
 
                 <div className="messageCart__price">
-                  {/* total: errrorr$ */}
                   total: {item.structValue.fields.price.numberValue} zł
                 </div>
               </div>

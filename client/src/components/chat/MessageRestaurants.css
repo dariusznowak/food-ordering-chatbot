@@ -17,23 +17,8 @@
   }
 }
 
-/* @media only screen and (max-width: 1026px) 
-{
-  .messageRestaurants__body {
-    width: 504px;
-  }
-} */
-
 .messageRestaurants__body div {
   margin-right: 15px;
   margin-left: 15px;
   text-align: center;
 }
-
-/* .messageRestaurants__body img {
-  height: 250px;
-  width: 250px;
-  object-fit: cover;
-  margin-top: 5px;
-  border-radius: 10px;
-} */

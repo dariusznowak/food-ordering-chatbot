@@ -4,7 +4,6 @@ import { UserContext } from "../loginAndRegister/UserContext";
 import { withRouter } from "react-router-dom";
 import Button from "@mui/material/Button";
 import axios from "../../axios.js";
-
 import Sidebar from "../sidebar/Sidebar";
 
 function Feedback() {
@@ -67,4 +66,3 @@ function Feedback() {
 }
 
 export default withRouter(Feedback);
-// export default Feedback;

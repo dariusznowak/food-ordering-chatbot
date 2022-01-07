@@ -23,18 +23,9 @@ async function deleteItem(data) {
     }
   });
 
-  // await User.updateOne(
-  //   { _id: userId, "cart.itemId": cartItemToDeleteId },
-  //   {
-  //     $pull: { "cart.itemId": cartItemToDeleteId },
-  //   }
-  // );
-
   await User.updateOne(
-    //znowu problematycznie z baza - tak sie usuwa z bazy!
     { _id: userId },
     { $pull: { cart: { itemId: cartItemToDeleteId } } },
-    // { safe: true, multi: true },
     function (err) {
       if (err) {
         console.log(err);
@@ -43,8 +34,6 @@ async function deleteItem(data) {
   );
 
   try {
-    // await User.deleteOne({ _id: userId, "cart.itemId": cartItemToChangeId });
-
     resultMessage = 'Deleted "' + itemName + '" item from basket';
   } catch {
     resultMessage = "Something went wrong. Couldn't delete item.";

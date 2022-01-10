@@ -11,5 +11,4 @@ Most of data was managed with **MongoDB Atlas**.
 
 
 ## App Demo Video
-https://user-images.githubusercontent.com/39008955/148847650-a6084c66-84a9-405d-afbb-75245242dd9f.mp4
-
+[![app-demo-video](https://img.youtube.com/vi/mvopBjnfves/0.jpg)](https://youtu.be/mvopBjnfves)

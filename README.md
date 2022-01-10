@@ -12,6 +12,6 @@ Drag and drop feature was developed using **react-dnd** package.
 ## Demo
 **Check out [live demo HERE](https://dariusznowak.github.io/kanban-board/)**
 
-![alt text](https://github.com/dariusznowak/food-ordering-chatbot/blob/master/client/public/screenshots/food-ordering-chatbot%20main%20page.jpg)
+![alt text](https://github.com/dariusznowak/food-ordering-chatbot/blob/master/client/public/screenshots/food-ordering-chatbot%20main%20page.png)
 
 

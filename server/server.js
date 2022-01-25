@@ -25,7 +25,9 @@ app.use(
 app.use(cookieParser());
 
 // DB config
-const connnection_url = config.mongoURI;
+// const connnection_url = config.mongoURI;
+const connnection_url =
+  "mongodb+srv://admin:CmRVRYfQxA4nZjo6@cluster0.yidxc.mongodb.net/chatbotdb?retryWrites=true&w=majority";
 mongoose.connect(
   connnection_url,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },

@@ -8,6 +8,7 @@ const loginRoute = require("./routes/login.js");
 const userAuth = require("./routes/userAuth.js");
 const fulfillmentRoutes = require("./routes/fulfillmentRoutes.js");
 const feedbackRoute = require("./routes/feedback.js");
+const config = require("./config/keys");
 
 // app config
 const app = express();
@@ -24,8 +25,7 @@ app.use(
 app.use(cookieParser());
 
 // DB config
-const connnection_url =
-  "mongodb+srv://admin:CmRVRYfQxA4nZjo6@cluster0.yidxc.mongodb.net/chatbotdb?retryWrites=true&w=majority";
+const connnection_url = config.mongoURI;
 mongoose.connect(
   connnection_url,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
